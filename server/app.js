@@ -1,6 +1,7 @@
 require('dotenv').config();
 const express = require('express');
 const winston = require('winston');
+const { DbConnection } = require('./routes/db.js');
 const app = express();
 
 const { PORT } = process.env;
@@ -16,22 +17,18 @@ app.use(corsMiddleware);
 app.use(customMiddle);
 app.use(express.json());
 
+// Call the DB connection
+DbConnection();
+
 // --------------------------------------------------------------------------------------------------------------------
 // Logger Configuration
 // --------------------------------------------------------------------------------------------------------------------
 const logger = winston.createLogger({
     level: 'info',
-    format: winston.format.combine(
-        winston.format.timestamp(),
-        winston.format.json()
-    ),
-    transports: [
-        new winston.transports.Console(),
-        new winston.transports.File({ filename: 'logs/server.log' })
-    ]
+    format: winston.format.combine(winston.format.timestamp(), winston.format.json()),
+    transports: [new winston.transports.Console(), new winston.transports.File({ filename: 'logs/server.log' })],
 });
 
-logger.log('info', 'Server Initiating...');
 
 // --------------------------------------------------------------------------------------------------------------------
 // Routes
@@ -50,5 +47,5 @@ app.use('/login', LoginRoutes);
 // --------------------------------------------------------------------------------------------------------------------
 app.listen(PORT, () => {
     console.log(`Server running on http://localhost:${PORT}`);
-    logger.log('info', `Server started on port ${PORT}`);
+    // logger.log('info', `Server started on port ${PORT}`);
 });

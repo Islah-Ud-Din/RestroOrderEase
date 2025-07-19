@@ -1,6 +1,6 @@
 const cors = require('cors');
 
-const { originURL } = process.env;
+const { originURL} = process.env;
 
 const corsOptions = {
     origin: originURL,
@@ -10,6 +10,6 @@ const corsOptions = {
     exposedHeaders: ['Authorization'],
 };
 
-const corsMiddleware = cors(corsOptions, console.log('first'));
+const corsMiddleware = cors(corsOptions);
 
 module.exports = corsMiddleware;

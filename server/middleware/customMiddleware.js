@@ -14,8 +14,6 @@ const customMiddle = (req, res, next) => {
         if (err) console.error('Failed to write log:', err);
     });
 
-    console.log(`${req.method} ${req.url}`);
-    console.log('second');
     next();
 };
 
