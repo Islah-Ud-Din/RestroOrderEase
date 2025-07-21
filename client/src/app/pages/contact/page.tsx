@@ -4,7 +4,10 @@ import { useState, useEffect } from "react";
 import dynamic from "next/dynamic";
 
 // Dynamically import LeafletMap with SSR disabled
-const LeafletMap = dynamic(() => import("@/components/LeafletMap/LeafletMap"), { ssr: false });
+// const LeafletMap = dynamic(() => import("@/components/LeafletMap/LeafletMap"), { ssr: false });
+
+import GoogleMapComponent from "@/components/GoogleMap/GoogleMap";
+
 
 export default function ContactPage() {
   const [form, setForm] = useState({ name: "", email: "", message: "" });
@@ -13,6 +16,8 @@ export default function ContactPage() {
   const [location, setLocation] = useState<string>("");
   const [locationError, setLocationError] = useState<string>("");
   const [latlng, setLatlng] = useState<{ lat: number; lng: number } | null>(null);
+
+  const GOOGLE_API_KEY = 'AIzaSyAuIR2zgDpOIjcAS3DlQ31HjbQHeloSd_I';
 
   useEffect(() => {
     if ("geolocation" in navigator) {
@@ -99,8 +104,12 @@ export default function ContactPage() {
           <span style={{ color: "red" }}>{locationError || "Fetching location..."}</span>
         )}
       </div>
-      <div style={{ height: 300, marginBottom: 20 }}>
+      {/* <div style={{ height: 300, marginBottom: 20 }}>
         <LeafletMap latlng={latlng} onPick={handleMapPick} />
+      </div> */}
+
+      <div style={{ height: 300, marginBottom: 20 }}>
+        <GoogleMapComponent latlng={latlng} onPick={handleMapPick} apiKey={GOOGLE_API_KEY} />
       </div>
       <form onSubmit={handleSubmit}>
         <div className="mb-3">
