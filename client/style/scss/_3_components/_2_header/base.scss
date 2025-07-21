@@ -1,0 +1,262 @@
+/*-------------------------------------------------------------------
+Components -> Components
+--------------------------------------------------------------------*/
+.rs-header {
+    background-color: $white;
+    padding: 1rem 2rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.08);
+    position: sticky;
+    top: 0;
+    z-index: 1000;
+    transition: background 0.3s, box-shadow 0.3s, backdrop-filter 0.3s;
+
+    &.blur-bg {
+        background-color: rgba($white, 0.7);
+        backdrop-filter: blur(10px) saturate(1.2);
+        box-shadow: 0 6px 24px rgba(0, 0, 0, 0.12);
+    }
+
+    .rs-container {
+        max-width: 1500px;
+        margin: 0 auto;
+        width: 100%;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        position: relative;
+    }
+}
+
+.rs-logo {
+    font-weight: bold;
+    font-size: 1.75rem;
+    letter-spacing: 1px;
+}
+
+.rs-nav {
+    display: flex;
+    gap: 1.5rem;
+    align-items: center;
+    position: relative;
+}
+
+.rs-link {
+    color: $dark;
+    text-decoration: none;
+    font-size: 1rem;
+    padding: 0.25rem 0.5rem;
+    border-radius: 4px;
+    transition: color 0.2s, background 0.2s, box-shadow 0.2s;
+    outline: none;
+    &:hover,
+    &:focus {
+        color: $primary;
+        background: rgba($primary, 0.08);
+        box-shadow: 0 2px 8px rgba($primary, 0.08);
+    }
+}
+
+.rs-dropdown {
+    position: relative;
+
+    .rs-dropdown-toggle {
+        color: $dark;
+        font-size: 1rem;
+        text-decoration: none;
+        cursor: pointer;
+        padding: 0.25rem 0.5rem;
+        border-radius: 4px;
+        transition: color 0.2s, background 0.2s, box-shadow 0.2s;
+        outline: none;
+
+        &:hover,
+        &:focus {
+            color: $primary;
+            background: rgba($primary, 0.08);
+            box-shadow: 0 2px 8px rgba($primary, 0.08);
+        }
+    }
+
+    .rs-dropdown-menu {
+        position: absolute;
+        top: 2.2rem;
+        left: 0;
+        background-color: $gray-100;
+        padding: 0.5rem 0.5rem;
+        border-radius: 10px;
+        box-shadow: 0 8px 32px rgba(0, 0, 0, 0.18);
+        display: flex;
+        flex-direction: column;
+        min-width: 180px;
+        z-index: 999;
+        animation: fadeIn 0.18s ease;
+        border: 1px solid $gray-300;
+
+        .rs-dropdown-item {
+            color: $dark;
+            padding: 0.5rem 1rem;
+            text-decoration: none;
+            font-size: 1rem;
+            border-radius: 6px;
+            transition: background 0.18s, color 0.18s;
+            cursor: pointer;
+            outline: none;
+
+            &:hover,
+            &:focus {
+                background: rgba($primary, 0.08);
+                color: $dark;
+            }
+        }
+    }
+}
+
+.rs-link,
+.rs-dropdown-item {
+    position: relative;
+    overflow: hidden;
+}
+
+.ripple-effect {
+    position: absolute;
+    border-radius: 50%;
+    pointer-events: none;
+    background: rgba($primary, 0.18);
+    transform: scale(0);
+    animation: ripple-animate 0.6s linear;
+    opacity: 0.7;
+    z-index: 2;
+}
+
+.rs-hamburger {
+    display: none;
+}
+
+@keyframes ripple-animate {
+    to {
+        transform: scale(2.5);
+        opacity: 0;
+    }
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(10px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+// Responsive styles
+@include media-breakpoint-down(md) {
+    .rs-header {
+        .rs-container {
+            flex-direction: column;
+            align-items: flex-start;
+            padding: 0.5rem 1rem;
+        }
+    }
+    .rs-logo {
+        font-size: 1.3rem;
+        margin-bottom: 0.5rem;
+    }
+    .rs-nav {
+        flex-direction: column;
+        gap: 0.5rem;
+        width: 100%;
+        background: $white;
+        box-shadow: 0 4px 16px rgba(0, 0, 0, 0.07);
+        border-radius: 0 0 10px 10px;
+        padding: 0.5rem 0;
+        position: absolute;
+        top: 100%;
+        left: 0;
+        z-index: 1200;
+        display: flex;
+        max-height: 0;
+        opacity: 0;
+        overflow: hidden;
+        pointer-events: none;
+        transition: max-height 0.35s cubic-bezier(0.4, 0, 0.2, 1), opacity 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+        align-items: flex-start;
+    }
+    .rs-nav.active {
+        max-height: 500px;
+        opacity: 1;
+        pointer-events: auto;
+        transition: max-height 0.45s cubic-bezier(0.4, 0, 0.2, 1), opacity 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+    .rs-link,
+    .rs-dropdown-toggle {
+        width: 100%;
+        text-align: left;
+        justify-content: flex-start;
+        padding-left: 1.2rem;
+        box-sizing: border-box;
+    }
+    .rs-hamburger {
+        display: block;
+        width: 32px;
+        height: 32px;
+        position: absolute;
+        right: 1rem;
+        top: 1rem;
+        z-index: 1300;
+        background: none;
+        border: none;
+        cursor: pointer;
+        outline: none;
+        span {
+            display: block;
+            width: 100%;
+            height: 4px;
+            margin: 5px 0;
+            background: $primary;
+            border-radius: 2px;
+            transition: 0.3s;
+        }
+    }
+    .rs-dropdown-menu {
+        position: static;
+        min-width: 100%;
+        box-shadow: none;
+        border-radius: 0;
+        border: none;
+        padding: 0.2rem 0.5rem 0.2rem 2.2rem;
+        background: transparent;
+        display: flex !important;
+        flex-direction: column;
+        gap: 0;
+    }
+    .rs-dropdown-item {
+        width: 100%;
+        text-align: left;
+        position: relative;
+        padding-left: 1.2rem;
+        box-sizing: border-box;
+        &::before {
+            content: '-';
+            position: absolute;
+            left: 0.2rem;
+            color: $primary;
+            font-weight: bold;
+        }
+    }
+    // Always show dropdown menu on mobile
+    .rs-dropdown-menu {
+        display: flex !important;
+        opacity: 1 !important;
+        pointer-events: auto !important;
+        max-height: none !important;
+        transition: none !important;
+    }
+    .rs-dropdown {
+        width: 100%;
+    }
+}

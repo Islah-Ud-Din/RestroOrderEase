@@ -7724,12 +7724,17 @@ Core -> Core
 --------------------------------------------------------------------*/
 body {
   font-family: "Satoshi", sans-serif;
-  width: 100%;
-  height: 100%;
+  background-color: #f5f5f5;
   margin: 0;
   padding: 0;
   overflow-x: hidden;
-  background-color: #f5f5f5;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+main {
+  flex: 1;
 }
 
 h1 {
@@ -7760,6 +7765,10 @@ ul {
 
 a {
   color: unset;
+  text-decoration: none;
+}
+a:hover {
+  text-decoration: none;
 }
 
 /*-------------------------------------------------------------------
@@ -7786,8 +7795,115 @@ Components -> Components
 }
 
 /*-------------------------------------------------------------------
- Component-> Footer
+ Component -> rs-footer (Responsive with Bootstrap MQ)
 --------------------------------------------------------------------*/
+.rs-footer {
+  background: #fff;
+  color: #343a40;
+  padding: 2rem 1rem 1rem 1rem;
+  text-align: center;
+  margin-top: auto;
+  box-shadow: 0 -2px 10px rgba(52, 58, 64, 0.04);
+}
+
+.rs-footer-content {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  align-items: center;
+  max-width: 1300px;
+  margin: 0 auto 1rem auto;
+  gap: 1.5rem;
+}
+
+.rs-footer-brand {
+  flex: 1 1 200px;
+  text-align: left;
+}
+
+.rs-footer-logo {
+  font-size: 1.3rem;
+  font-weight: bold;
+  letter-spacing: 1px;
+  color: #4566f7;
+}
+
+.rs-footer-nav {
+  flex: 1 1 200px;
+  display: flex;
+  justify-content: center;
+  gap: 1.5rem;
+  flex-wrap: wrap;
+}
+.rs-footer-nav a {
+  color: #343a40;
+  text-decoration: none;
+  font-size: 1rem;
+  transition: color 0.2s;
+  border-radius: 4px;
+  padding: 0.15rem 0.5rem;
+}
+.rs-footer-nav a:hover {
+  color: #4566f7;
+  background: rgba(69, 102, 247, 0.08);
+  box-shadow: 0 2px 8px rgba(69, 102, 247, 0.08);
+}
+
+.rs-footer-social {
+  flex: 1 1 200px;
+  display: flex;
+  justify-content: flex-end;
+  gap: 1rem;
+}
+.rs-footer-social a {
+  color: #343a40;
+  text-decoration: none;
+  font-size: 1.1rem;
+  transition: color 0.2s;
+  border-radius: 4px;
+  padding: 0.15rem 0.5rem;
+}
+.rs-footer-social a:hover {
+  color: #4566f7;
+  background: rgba(69, 102, 247, 0.08);
+  box-shadow: 0 2px 8px rgba(69, 102, 247, 0.08);
+}
+
+.rs-footer-bottom {
+  border-top: 1px solid #dee2e6;
+  padding-top: 1rem;
+  font-size: 0.95rem;
+  color: #6c757d;
+}
+
+/* Responsive styles using Bootstrap's media breakpoints */
+@media (max-width: 991.98px) {
+  .rs-footer-content {
+    flex-direction: column;
+    align-items: flex-start;
+    text-align: left;
+    gap: 1rem;
+  }
+  .rs-footer-brand,
+  .rs-footer-nav,
+  .rs-footer-social {
+    justify-content: flex-start;
+    text-align: left;
+    width: 100%;
+  }
+  .rs-footer-nav {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0.75rem;
+  }
+  .rs-footer-social {
+    justify-content: flex-start;
+    gap: 0.75rem;
+  }
+  .rs-footer-social a {
+    font-size: 1rem;
+  }
+}
 /*-------------------------------------------------------------------
  Component-> BreadCrumb
 --------------------------------------------------------------------*/
@@ -8319,6 +8435,255 @@ input[type=button].btn-block {
   width: 100%;
 }
 
+/*-------------------------------------------------------------------
+ Header
+--------------------------------------------------------------------*/
+/*-------------------------------------------------------------------
+Components -> Components
+--------------------------------------------------------------------*/
+.rs-header {
+  background-color: #fff;
+  padding: 1rem 2rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.08);
+  position: sticky;
+  top: 0;
+  z-index: 1000;
+  transition: background 0.3s, box-shadow 0.3s, backdrop-filter 0.3s;
+}
+.rs-header.blur-bg {
+  background-color: rgba(255, 255, 255, 0.7);
+  backdrop-filter: blur(10px) saturate(1.2);
+  box-shadow: 0 6px 24px rgba(0, 0, 0, 0.12);
+}
+.rs-header .rs-container {
+  max-width: 1500px;
+  margin: 0 auto;
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  position: relative;
+}
+
+.rs-logo {
+  font-weight: bold;
+  font-size: 1.75rem;
+  letter-spacing: 1px;
+}
+
+.rs-nav {
+  display: flex;
+  gap: 1.5rem;
+  align-items: center;
+  position: relative;
+}
+
+.rs-link {
+  color: #343a40;
+  text-decoration: none;
+  font-size: 1rem;
+  padding: 0.25rem 0.5rem;
+  border-radius: 4px;
+  transition: color 0.2s, background 0.2s, box-shadow 0.2s;
+  outline: none;
+}
+.rs-link:hover, .rs-link:focus {
+  color: #4566f7;
+  background: rgba(69, 102, 247, 0.08);
+  box-shadow: 0 2px 8px rgba(69, 102, 247, 0.08);
+}
+
+.rs-dropdown {
+  position: relative;
+}
+.rs-dropdown .rs-dropdown-toggle {
+  color: #343a40;
+  font-size: 1rem;
+  text-decoration: none;
+  cursor: pointer;
+  padding: 0.25rem 0.5rem;
+  border-radius: 4px;
+  transition: color 0.2s, background 0.2s, box-shadow 0.2s;
+  outline: none;
+}
+.rs-dropdown .rs-dropdown-toggle:hover, .rs-dropdown .rs-dropdown-toggle:focus {
+  color: #4566f7;
+  background: rgba(69, 102, 247, 0.08);
+  box-shadow: 0 2px 8px rgba(69, 102, 247, 0.08);
+}
+.rs-dropdown .rs-dropdown-menu {
+  position: absolute;
+  top: 2.2rem;
+  left: 0;
+  background-color: #f8f9fa;
+  padding: 0.5rem 0.5rem;
+  border-radius: 10px;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.18);
+  display: flex;
+  flex-direction: column;
+  min-width: 180px;
+  z-index: 999;
+  animation: fadeIn 0.18s ease;
+  border: 1px solid #dee2e6;
+}
+.rs-dropdown .rs-dropdown-menu .rs-dropdown-item {
+  color: #343a40;
+  padding: 0.5rem 1rem;
+  text-decoration: none;
+  font-size: 1rem;
+  border-radius: 6px;
+  transition: background 0.18s, color 0.18s;
+  cursor: pointer;
+  outline: none;
+}
+.rs-dropdown .rs-dropdown-menu .rs-dropdown-item:hover, .rs-dropdown .rs-dropdown-menu .rs-dropdown-item:focus {
+  background: rgba(69, 102, 247, 0.08);
+  color: #343a40;
+}
+
+.rs-link,
+.rs-dropdown-item {
+  position: relative;
+  overflow: hidden;
+}
+
+.ripple-effect {
+  position: absolute;
+  border-radius: 50%;
+  pointer-events: none;
+  background: rgba(69, 102, 247, 0.18);
+  transform: scale(0);
+  animation: ripple-animate 0.6s linear;
+  opacity: 0.7;
+  z-index: 2;
+}
+
+.rs-hamburger {
+  display: none;
+}
+
+@keyframes ripple-animate {
+  to {
+    transform: scale(2.5);
+    opacity: 0;
+  }
+}
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+@media (max-width: 991.98px) {
+  .rs-header .rs-container {
+    flex-direction: column;
+    align-items: flex-start;
+    padding: 0.5rem 1rem;
+  }
+  .rs-logo {
+    font-size: 1.3rem;
+    margin-bottom: 0.5rem;
+  }
+  .rs-nav {
+    flex-direction: column;
+    gap: 0.5rem;
+    width: 100%;
+    background: #fff;
+    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.07);
+    border-radius: 0 0 10px 10px;
+    padding: 0.5rem 0;
+    position: absolute;
+    top: 100%;
+    left: 0;
+    z-index: 1200;
+    display: flex;
+    max-height: 0;
+    opacity: 0;
+    overflow: hidden;
+    pointer-events: none;
+    transition: max-height 0.35s cubic-bezier(0.4, 0, 0.2, 1), opacity 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+    align-items: flex-start;
+  }
+  .rs-nav.active {
+    max-height: 500px;
+    opacity: 1;
+    pointer-events: auto;
+    transition: max-height 0.45s cubic-bezier(0.4, 0, 0.2, 1), opacity 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+  }
+  .rs-link,
+  .rs-dropdown-toggle {
+    width: 100%;
+    text-align: left;
+    justify-content: flex-start;
+    padding-left: 1.2rem;
+    box-sizing: border-box;
+  }
+  .rs-hamburger {
+    display: block;
+    width: 32px;
+    height: 32px;
+    position: absolute;
+    right: 1rem;
+    top: 1rem;
+    z-index: 1300;
+    background: none;
+    border: none;
+    cursor: pointer;
+    outline: none;
+  }
+  .rs-hamburger span {
+    display: block;
+    width: 100%;
+    height: 4px;
+    margin: 5px 0;
+    background: #4566f7;
+    border-radius: 2px;
+    transition: 0.3s;
+  }
+  .rs-dropdown-menu {
+    position: static;
+    min-width: 100%;
+    box-shadow: none;
+    border-radius: 0;
+    border: none;
+    padding: 0.2rem 0.5rem 0.2rem 2.2rem;
+    background: transparent;
+    display: flex !important;
+    flex-direction: column;
+    gap: 0;
+  }
+  .rs-dropdown-item {
+    width: 100%;
+    text-align: left;
+    position: relative;
+    padding-left: 1.2rem;
+    box-sizing: border-box;
+  }
+  .rs-dropdown-item::before {
+    content: "-";
+    position: absolute;
+    left: 0.2rem;
+    color: #4566f7;
+    font-weight: bold;
+  }
+  .rs-dropdown-menu {
+    display: flex !important;
+    opacity: 1 !important;
+    pointer-events: auto !important;
+    max-height: none !important;
+    transition: none !important;
+  }
+  .rs-dropdown {
+    width: 100%;
+  }
+}
 /*-------------------------------------------------------------------
   Utilities
 --------------------------------------------------------------------*/

@@ -3,12 +3,17 @@
 --------------------------------------------------------------------*/
 body {
     font-family: $font-family-base;
-    width: 100%;
-    height: 100%;
+    background-color: $gray-400;
     margin: 0;
     padding: 0;
     overflow-x: hidden;
-    background-color: $gray-400;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+}
+
+main {
+    flex: 1;
 }
 
 h1 {
@@ -39,4 +44,9 @@ ul {
 
 a {
     color: unset;
+    text-decoration: none;
+
+    &:hover {
+        text-decoration: none;
+    }
 }
