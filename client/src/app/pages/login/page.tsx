@@ -1,22 +1,13 @@
 'use client';
 
 import React, { useState } from 'react';
-import Image from 'next/image';
 import { useRouter } from 'next/navigation';
-// import { Form, Input, Button, Typography, message, Checkbox } from 'antd';
 
 // Context
 import { useUser } from '@/contexts/UserContext';
 
 // Custom Hook
 import useApi from '@/hooks/useApi';
-import RippleEffect from '@/lib/RippleEffect';
-
-// Assets
-// import MainMockup from '@/public/file.svg';
-// import Logo from '@/public/vercel.svg';
-
-// const { Title, Link } = Typography;
 
 interface LoginFormValues {
     email: string;
@@ -59,14 +50,14 @@ const Login: React.FC = () => {
             setError(validationError);
             return;
         }
-    
+
         setLoading(true);
         try {
             const response: { accessToken?: string; message?: string } = await postMethod('/api/login', {
                 email: form.email,
                 password: form.password,
             });
-    
+
             if (response?.accessToken) {
                 setUser(response.accessToken);
                 localStorage.setItem('authToken', response.accessToken);
@@ -74,28 +65,18 @@ const Login: React.FC = () => {
             } else {
                 setError(response?.message || 'Invalid login response.');
             }
-    
         } catch (err) {
             setError('Login failed. Please try again.');
         } finally {
             setLoading(false);
         }
     };
-    
 
     return (
-        <div className="signup-page">
+        <div className="login-page">
             <div className="container">
-                <div className="row align-items-center">
-                    <div className="col-lg-6 signup-left mb-5 mb-lg-0" style={{ paddingRight: '40px' }}>
-                        <div className="sl-logo d-flex align-items-center mb-3">
-                            {/* <Image className="img-fluid" src={Logo} alt="Logo" width={40} height={40} /> */}
-                            <h3 style={{ marginLeft: '10px' }}>TravelSol</h3>
-                        </div>
-                        <h2 className="mb-5">Your place to work, Plan, Create, Control</h2>
-                        {/* <Image className="img-fluid" src={MainMockup} alt="Main" width={500} height={500} /> */}
-                    </div>
-                    <div className="col-lg-6 login-content" style={{ paddingLeft: '40px', maxWidth: '500px', width: '100%' }}>
+                <div className="row">
+                    <div className="login-content">
                         <h4 className="text-center mb-4">Login to Your Account</h4>
                         <form className="login-form" onSubmit={handleLogin} autoComplete="off">
                             <div className="form-group">
@@ -138,7 +119,9 @@ const Login: React.FC = () => {
                                 </label>
                             </div>
 
-                            <button className="btn btn-primary btn-block" type="submit">Login</button>
+                            <button className="btn btn-primary btn-block" type="submit">
+                                Login
+                            </button>
 
                             {error && (
                                 <div className="error-message" style={{ color: 'red', marginTop: 10 }}>
@@ -152,7 +135,7 @@ const Login: React.FC = () => {
                         <p style={{ marginTop: '20px', textAlign: 'center' }}>
                             <strong>Login</strong> with Others
                         </p>
-                        <div style={{ marginTop: 16, maxWidth: 400, marginInline: 'auto' }}>
+                        <div>
                             <button
                                 className="btn btn-outline-primary btn-block"
                                 style={{ marginBottom: 8 }}

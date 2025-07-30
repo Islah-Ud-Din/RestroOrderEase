@@ -59,7 +59,7 @@ router.post('/signup', async (req, res) => {
 
         await transporter.sendMail(mailOptions);
 
-        res.status(200).json({ message: 'Registration successful! Please verify your email.' });
+        res.status(200).json({ success: true, message: 'Registration successful! Please verify your email.' });
     } catch (error) {
         console.error('Registration error:', error);
         res.status(500).json({ message: 'Registration failed. Please try again.' });
@@ -70,7 +70,7 @@ router.post('/signup', async (req, res) => {
 router.post('/login', async (req, res) => {
     const { email, password } = req.body;
     console.log(email, password);
-    
+
     if (!email || !password) {
         return res.status(400).json({ message: 'Email and password are required' });
     }
@@ -102,7 +102,7 @@ router.post('/login', async (req, res) => {
             path: '/api/refresh-token',
         });
 
-        res.status(200).json({ accessToken });
+        res.status(200).json({success: true, accessToken });
     } catch (err) {
         console.error('Login error:', err);
         res.status(500).json({ message: 'Server error' });
@@ -136,7 +136,7 @@ router.post('/verify', async (req, res) => {
 
         await pool.query('UPDATE users SET is_verified = true, otp = NULL, otp_expiry = NULL WHERE email = $1', [email]);
 
-        res.status(200).json({ message: 'OTP verified successfully' });
+        res.status(200).json({success: true,  message: 'OTP verified successfully' });
     } catch (err) {
         console.error('OTP verification error:', err);
         res.status(500).json({ message: 'Internal server error' });

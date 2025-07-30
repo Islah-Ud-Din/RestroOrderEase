@@ -1,5 +1,5 @@
 'use client';
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import Image from 'next/image';
 import { useRouter } from 'next/navigation';
 // import MainMockup from '@/public/file.svg';
@@ -19,6 +19,7 @@ const initialFormState = {
 
 const SignUpPage = () => {
     const router = useRouter();
+    const [isVerified, setIsVerified] = useState(false);
     const [form, setForm] = useState(initialFormState);
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState('');
@@ -83,6 +84,30 @@ const SignUpPage = () => {
             setLoading(false);
         }
     };
+
+    const handleOtpVerified = (success: boolean) => {
+        console.log('handleOtpVerified called with:', success);
+        if (success) {
+            setSuccess('Email verified successfully!');
+            setShowOtpModal(false);
+            setIsVerified(true);
+            router.push('/pages/login');
+        } else {
+            setError('Verification failed. Please try again.');
+        }
+    };
+
+    useEffect(() => {
+        if (isVerified) {
+            setShowOtpModal(false); // close modal
+            // Delay a bit if you want success message shown before redirect
+            const timeout = setTimeout(() => {
+                router.push('/pages/login');
+            }, 300); // 300ms to allow UI update
+
+            return () => clearTimeout(timeout);
+        }
+    }, [isVerified, router]);
 
     return (
         <div className="signup-page">
@@ -183,12 +208,25 @@ const SignUpPage = () => {
                                     </select>
                                 </div>
                                 <button type="submit" className="btn btn-primary" disabled={loading}>
-                                    {loading ? 'Registering...' : 'Register'}
+                                    Sign Up
                                 </button>
-                                {error && <div className="error-message" style={{ color: 'red', marginTop: 10 }}>{error}</div>}
-                                {success && <div className="success-message" style={{ color: 'green', marginTop: 10 }}>{success}</div>}
+                                {error && (
+                                    <div className="error-message" style={{ color: 'red', marginTop: 10 }}>
+                                        {error}
+                                    </div>
+                                )}
+                                {success && (
+                                    <div className="success-message" style={{ color: 'green', marginTop: 10 }}>
+                                        {success}
+                                    </div>
+                                )}
                             </form>
-                            <VerifyOtp visible={showOtpModal} onClose={() => setShowOtpModal(false)} email={userEmail} />
+                            <VerifyOtp
+                                visible={showOtpModal}
+                                onClose={() => setShowOtpModal(false)}
+                                email={userEmail}
+                                onVerified={handleOtpVerified}
+                            />
                         </div>
                     </div>
                 </div>
