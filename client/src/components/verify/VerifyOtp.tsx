@@ -61,16 +61,17 @@ const VerifyOtp: React.FC<VerifyOtpProps> = ({ visible, onClose, email }) => {
         setSuccessMsg(null);
         try {
             await postMethod('/api/verify', { email, token: otp });
-            setTimeout(() => {
-                if (data && data.success) {
-                    setSuccessMsg('OTP verified successfully!');
-                    message.success('OTP verified successfully!');
+            const response = data as OtpVerifyResponse;
+            if (response && response.success) {
+                setSuccessMsg('OTP verified successfully!');
+                message.success('OTP verified successfully!');
+                setTimeout(() => {
                     onClose();
                     router.push('/pages/login');
-                } else {
-                    setLocalError(data?.message || error || 'Invalid OTP');
-                }
-            }, 100);
+                }, 1000); // slight delay for UX
+            } else {
+                setLocalError(response?.message || 'Invalid OTP');
+            }
         } catch (err) {
             setLocalError('Verification failed. Please try again.');
         } finally {

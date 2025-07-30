@@ -69,7 +69,8 @@ router.post('/signup', async (req, res) => {
 // POST /api/login - Login and Generate Tokens
 router.post('/login', async (req, res) => {
     const { email, password } = req.body;
-
+    console.log(email, password);
+    
     if (!email || !password) {
         return res.status(400).json({ message: 'Email and password are required' });
     }

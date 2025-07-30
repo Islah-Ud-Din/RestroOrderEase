@@ -25,7 +25,7 @@ interface LoginFormValues {
 
 const Login: React.FC = () => {
     const router = useRouter();
-    // const { setUser } = useUser();
+    const { setUser } = useUser();
     const { postMethod } = useApi();
 
     const [form, setForm] = useState<LoginFormValues>({ email: '', password: '' });
@@ -59,22 +59,29 @@ const Login: React.FC = () => {
             setError(validationError);
             return;
         }
+    
         setLoading(true);
         try {
-            const response = (await postMethod('/api/login', form)) as unknown as { accessToken?: string };
-            if (response && response.accessToken) {
-                // setUser(response.accessToken as unknown);
+            const response: { accessToken?: string; message?: string } = await postMethod('/api/login', {
+                email: form.email,
+                password: form.password,
+            });
+    
+            if (response?.accessToken) {
+                setUser(response.accessToken);
                 localStorage.setItem('authToken', response.accessToken);
                 router.push('/pages/dashboard');
             } else {
-                setError('Invalid login response.');
+                setError(response?.message || 'Invalid login response.');
             }
-        } catch (err: unknown) {
-            setError('Invalid email or password. Please try again.');
+    
+        } catch (err) {
+            setError('Login failed. Please try again.');
         } finally {
             setLoading(false);
         }
     };
+    
 
     return (
         <div className="signup-page">
@@ -131,9 +138,7 @@ const Login: React.FC = () => {
                                 </label>
                             </div>
 
-                            <RippleEffect type="submit" className="btn btn-primary btn-block" disabled={loading}>
-                                {loading ? 'Logging in...' : 'Login'}
-                            </RippleEffect>
+                            <button className="btn btn-primary btn-block" type="submit">Login</button>
 
                             {error && (
                                 <div className="error-message" style={{ color: 'red', marginTop: 10 }}>

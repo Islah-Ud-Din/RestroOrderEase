@@ -53,7 +53,7 @@ const Header = () => {
                 </button>
                 <nav className={`rs-nav${navOpen ? ' active' : ''}`}>
                     <RippleEffect className="rs-link">
-                        <Link href="/">Home</Link>
+                        <Link href="/pages/dashboard">Home</Link>
                     </RippleEffect>
                     {isMobile ? (
                         <>

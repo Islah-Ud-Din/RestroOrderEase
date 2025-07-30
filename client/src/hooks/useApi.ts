@@ -4,8 +4,8 @@ interface UseApiResult<T> {
   data: T | null;
   error: string | null;
   loading: boolean;
-  getMethod: (url: string, options?: RequestInit) => Promise<void>;
-  postMethod: (url: string, body?: unknown, options?: RequestInit) => Promise<void>;
+  getMethod: <R = T>(url: string, options?: RequestInit) => Promise<R | null | void>;
+  postMethod: <R = T>(url: string, body?: unknown, options?: RequestInit) => Promise<R | null | void>;
 }
 
 interface UseApiOptions {
@@ -18,14 +18,15 @@ function useApi<T = unknown>(options?: UseApiOptions): UseApiResult<T> {
   const [error, setError] = useState<string | null>(null);
   const [loading, setLoading] = useState(false);
 
-  const getMethod = async (url: string, options?: RequestInit) => {
+  const getMethod = async <R = T>(url: string, options?: RequestInit): Promise<R | null | void> => {
     setLoading(true);
     setError(null);
     try {
       const res = await fetch(baseUrl + url, { ...options, method: 'GET' });
       if (!res.ok) throw new Error(`Error: ${res.status}`);
-      const json = await res.json();
-      setData(json);
+      const json: R = await res.json();
+      setData(json as unknown as T);
+      return json;
     } catch (err: unknown) {
       setError(err instanceof Error ? err.message : 'Unknown error');
       setData(null);
@@ -34,7 +35,7 @@ function useApi<T = unknown>(options?: UseApiOptions): UseApiResult<T> {
     }
   };
 
-  const postMethod = async (url: string, body?: unknown, options?: RequestInit) => {
+  const postMethod = async <R = T>(url: string, body?: unknown, options?: RequestInit): Promise<R | null | void> => {
     setLoading(true);
     setError(null);
     try {
@@ -43,13 +44,14 @@ function useApi<T = unknown>(options?: UseApiOptions): UseApiResult<T> {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
-          ...(options && options.headers),
+          ...(options?.headers || {}),
         },
         body: JSON.stringify(body),
       });
       if (!res.ok) throw new Error(`Error: ${res.status}`);
-      const json = await res.json();
-      setData(json);
+      const json: R = await res.json();
+      setData(json as unknown as T);
+      return json;
     } catch (err: unknown) {
       setError(err instanceof Error ? err.message : 'Unknown error');
       setData(null);
