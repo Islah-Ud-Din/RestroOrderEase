@@ -35,12 +35,14 @@ const logger = winston.createLogger({
 // --------------------------------------------------------------------------------------------------------------------
 const LoginRoutes = require('./routes/login');
 
+
+app.use('/api', LoginRoutes);
+
+
 app.get('/', (req, res) => {
     res.send('Restaurant Management System API');
     logger.log('info', 'Root route accessed');
 });
-
-app.use('/login', LoginRoutes);
 
 // --------------------------------------------------------------------------------------------------------------------
 // Start Server

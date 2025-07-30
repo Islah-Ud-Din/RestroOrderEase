@@ -24,12 +24,18 @@ export default function ContactPage() {
       navigator.geolocation.getCurrentPosition(
         async (position) => {
           const { latitude, longitude } = position.coords;
+
+          console.log("latitude", latitude);
+          console.log("longitude", longitude);
+
           setLatlng({ lat: latitude, lng: longitude });
           try {
             const res = await fetch(
               `https://api.opencagedata.com/geocode/v1/json?q=${latitude}+${longitude}&key=65166b14ce784a67a77a4d47a56d403d`
             );
             const data = await res.json();
+
+            console.log("data", data);
             const components = data.results[0]?.components || {};
             const city = components.city || components.town || components.village || "";
             const state = components.state || "";

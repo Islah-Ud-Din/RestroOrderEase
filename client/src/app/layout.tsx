@@ -1,13 +1,8 @@
 import type { Metadata } from "next";
-
-// Style sheet
+import { UserProvider } from "@/contexts/UserContext";
 import "../../style/css/style.css";
-
-
-// Font styles
 import "../../style/css/font.css";
-import Header from "@/components/Header/Header";
-import Footer from "@/components/Footer/Footer";
+import AuthLayout from "@/components/layout/AuthLayout";
 
 export const metadata: Metadata = {
   title: "Food System",
@@ -28,9 +23,9 @@ export default function RootLayout({
           flexDirection: "column",
         }}
       >
-        <Header />
-        <main style={{ flex: 1 }}>{children}</main>
-        <Footer />
+        <UserProvider>
+          <AuthLayout>{children}</AuthLayout>
+        </UserProvider>
       </body>
     </html>
   );

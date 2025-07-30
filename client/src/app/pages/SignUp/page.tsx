@@ -6,6 +6,8 @@ import { useRouter } from 'next/navigation';
 // import Logo from '@/public/vercel.svg';
 import useApi from '@/hooks/useApi';
 
+import VerifyOtp from '@/components/verify/VerifyOtp';
+
 const initialFormState = {
     firstName: '',
     lastName: '',
@@ -58,10 +60,10 @@ const SignUpPage = () => {
         setLoading(true);
         setUserEmail(form.email);
         try {
-            await postMethod('http://localhost:3670/api/register', {
+            await postMethod('/api/signup', {
                 email: form.email,
                 password: form.password,
-                username: form.email, // or use another field if you have username
+                username: form.email,
                 firstName: form.firstName,
                 lastName: form.lastName,
                 country: form.country,
@@ -72,6 +74,7 @@ const SignUpPage = () => {
                 // router.push('/pages/login');
             } else {
                 setSuccess('Registration successful!');
+                setShowOtpModal(true);
             }
             setForm(initialFormState);
         } catch (error) {
@@ -185,8 +188,7 @@ const SignUpPage = () => {
                                 {error && <div className="error-message" style={{ color: 'red', marginTop: 10 }}>{error}</div>}
                                 {success && <div className="success-message" style={{ color: 'green', marginTop: 10 }}>{success}</div>}
                             </form>
-                            {/*
-                            <VerifyOtp visible={showOtpModal} onClose={() => setShowOtpModal(false)} email={userEmail} /> */}
+                            <VerifyOtp visible={showOtpModal} onClose={() => setShowOtpModal(false)} email={userEmail} />
                         </div>
                     </div>
                 </div>

@@ -1,12 +1,13 @@
 'use client';
 
 import Image from 'next/image';
-import SignUpPage from './pages/SignUp/page';
+import Login from './pages/login/page';
 
 export default function Home() {
     return (
         <div className="home container">
-            <SignUpPage />
+            {/* <SignUpPage />   */}
+            <Login />
         </div>
     );
 }

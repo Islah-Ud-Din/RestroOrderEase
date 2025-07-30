@@ -1,0 +1,12 @@
+22/07/2025, 21:27:08: GET : /
+22/07/2025, 21:49:01: POST : /api/signup
+22/07/2025, 21:52:23: POST : /api/signup
+22/07/2025, 21:55:30: POST : /api/signup
+22/07/2025, 22:02:31: POST : /api/signup
+24/07/2025, 16:46:57: POST : /api/signup
+24/07/2025, 16:47:27: POST : /api/resend-otp
+24/07/2025, 16:48:17: POST : /api/signup
+24/07/2025, 16:49:34: POST : /api/signup
+24/07/2025, 16:50:00: POST : /api/verify
+24/07/2025, 16:52:53: POST : /api/verify
+24/07/2025, 20:21:17: POST : /api/signup
