@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { UserProvider } from "@/contexts/UserContext";
+import { CartProvider } from "@/contexts/CartContext";
 import "../../style/css/style.css";
 import "../../style/css/font.css";
 import AuthLayout from "@/components/layout/AuthLayout";
@@ -24,7 +25,9 @@ export default function RootLayout({
         }}
       >
         <UserProvider>
-          <AuthLayout>{children}</AuthLayout>
+          <CartProvider>
+            <AuthLayout>{children}</AuthLayout>
+          </CartProvider>
         </UserProvider>
       </body>
     </html>

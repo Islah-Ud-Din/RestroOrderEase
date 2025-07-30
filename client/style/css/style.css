@@ -8700,7 +8700,7 @@ utilities -> utilities
 Pages -> Dashboard
 --------------------------------------------------------------------*/
 .sidebar {
-  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  background: linear-gradient(135deg, #4566f7 0%, #00255B 100%);
   color: white;
   height: 100vh;
   width: 280px;
@@ -8736,7 +8736,7 @@ Pages -> Dashboard
   z-index: 1001;
 }
 .sidebar .sidebar-toggle .btn {
-  background: white;
+  background: #4566f7;
   border-radius: 50%;
   width: 30px;
   height: 30px;
@@ -8744,7 +8744,7 @@ Pages -> Dashboard
   align-items: center;
   justify-content: center;
   box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
-  color: #667eea;
+  color: #fff;
   border: none;
   transition: all 0.3s ease;
 }
@@ -8893,18 +8893,10 @@ Pages -> Dashboard
   background-color: #f8f9fc;
   min-height: 100vh;
 }
-.dashboard-page .navbar {
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-  margin-left: 280px;
-  transition: margin-left 0.3s ease;
-}
-.dashboard-page .navbar .navbar-brand {
-  font-weight: 600;
-}
 .dashboard-page .main-content {
-  margin-left: 280px;
   transition: margin-left 0.3s ease;
-  padding: 20px;
+  padding: 0;
+  min-height: 100vh;
 }
 .dashboard-page .sidebar.collapsed + .main-content,
 .dashboard-page .sidebar.collapsed ~ .navbar {
@@ -9002,6 +8994,108 @@ Pages -> Dashboard
   justify-content: center;
   min-height: 100vh;
   background-color: #f8f9fc;
+}
+.dashboard-page .menu-item {
+  transition: all 0.3s ease;
+  border: none;
+  overflow: hidden;
+}
+.dashboard-page .menu-item:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
+}
+.dashboard-page .menu-item .card-img-top {
+  transition: transform 0.3s ease;
+}
+.dashboard-page .menu-item:hover .card-img-top {
+  transform: scale(1.05);
+}
+.dashboard-page .menu-item .badge {
+  font-size: 0.75rem;
+  padding: 0.5rem 0.75rem;
+}
+.dashboard-page .cart-container .cart-item {
+  transition: all 0.3s ease;
+  border: 1px solid #e9ecef;
+}
+.dashboard-page .cart-container .cart-item:hover {
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+.dashboard-page .cart-container .quantity-controls .btn {
+  width: 35px;
+  height: 35px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 12px;
+}
+.dashboard-page .cart-empty {
+  background: #f8f9fa;
+  border-radius: 10px;
+  border: 2px dashed #dee2e6;
+}
+.dashboard-page .dashboard-header {
+  border-bottom: 1px solid #e9ecef;
+  position: sticky;
+  top: 0;
+  z-index: 100;
+}
+.dashboard-page .dashboard-tabs {
+  border-bottom: 1px solid #e9ecef;
+}
+.dashboard-page .dashboard-tabs .nav-tabs {
+  border-bottom: none;
+}
+.dashboard-page .dashboard-tabs .nav-tabs .nav-link {
+  border: none;
+  border-radius: 0;
+  padding: 12px 24px;
+  font-weight: 500;
+  color: #6c757d;
+  transition: all 0.3s ease;
+}
+.dashboard-page .dashboard-tabs .nav-tabs .nav-link:hover {
+  color: #007bff;
+  background-color: transparent;
+}
+.dashboard-page .dashboard-tabs .nav-tabs .nav-link.active {
+  color: #007bff;
+  background-color: transparent;
+  border-bottom: 3px solid #007bff;
+}
+.dashboard-page .category-filter .btn-group .btn {
+  border-radius: 20px;
+  margin-right: 8px;
+  margin-bottom: 8px;
+  padding: 8px 16px;
+  font-size: 0.875rem;
+  transition: all 0.3s ease;
+}
+.dashboard-page .category-filter .btn-group .btn:hover {
+  transform: translateY(-1px);
+}
+.dashboard-page .section-header h3 {
+  font-weight: 600;
+  margin-bottom: 8px;
+}
+.dashboard-page .section-header p {
+  font-size: 0.95rem;
+}
+.dashboard-page .cart-badge .badge {
+  color: #fff;
+  animation: pulse 2s infinite;
+}
+@keyframes pulse {
+  0% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.1);
+  }
+  100% {
+    transform: scale(1);
+  }
 }
 @media (max-width: 768px) {
   .dashboard-page .sidebar {

@@ -4,7 +4,7 @@ Pages -> Dashboard
 
 // Sidebar Component Styles
 .sidebar {
-    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    background: linear-gradient(135deg, $primary 0%,  $secondary 100%);
     color: white;
     height: 100vh;
     width: 280px;
@@ -45,7 +45,7 @@ Pages -> Dashboard
         z-index: 1001;
 
         .btn {
-            background: white;
+            background: $primary;
             border-radius: 50%;
             width: 30px;
             height: 30px;
@@ -53,7 +53,7 @@ Pages -> Dashboard
             align-items: center;
             justify-content: center;
             box-shadow: 0 2px 5px rgba(0,0,0,0.2);
-            color: #667eea;
+            color: $white;
             border: none;
             transition: all 0.3s ease;
 
@@ -235,20 +235,11 @@ Pages -> Dashboard
     background-color: #f8f9fc;
     min-height: 100vh;
 
-    .navbar {
-        box-shadow: 0 2px 4px rgba(0,0,0,0.1);
-        margin-left: 280px;
-        transition: margin-left 0.3s ease;
-        
-        .navbar-brand {
-            font-weight: 600;
-        }
-    }
 
     .main-content {
-        margin-left: 280px;
         transition: margin-left 0.3s ease;
-        padding: 20px;
+        padding: 0;
+        min-height: 100vh;
     }
 
     // When sidebar is collapsed
@@ -261,7 +252,7 @@ Pages -> Dashboard
     @media (max-width: 768px) {
         .sidebar {
             transform: translateX(-100%);
-            
+
             &.mobile-open {
                 transform: translateX(0);
             }
@@ -379,6 +370,145 @@ Pages -> Dashboard
         justify-content: center;
         min-height: 100vh;
         background-color: #f8f9fc;
+    }
+
+    // Menu Items and Cart Styles
+    .menu-item {
+        transition: all 0.3s ease;
+        border: none;
+        overflow: hidden;
+
+        &:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 25px rgba(0,0,0,0.15);
+        }
+
+        .card-img-top {
+            transition: transform 0.3s ease;
+        }
+
+        &:hover .card-img-top {
+            transform: scale(1.05);
+        }
+
+        .badge {
+            font-size: 0.75rem;
+            padding: 0.5rem 0.75rem;
+        }
+    }
+
+    .cart-container {
+        .cart-item {
+            transition: all 0.3s ease;
+            border: 1px solid #e9ecef;
+
+            &:hover {
+                box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+            }
+        }
+
+        .quantity-controls {
+            .btn {
+                width: 35px;
+                height: 35px;
+                border-radius: 50%;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                font-size: 12px;
+            }
+        }
+    }
+
+    .cart-empty {
+        background: #f8f9fa;
+        border-radius: 10px;
+        border: 2px dashed #dee2e6;
+    }
+
+    // Dashboard Header and Navigation
+    .dashboard-header {
+        border-bottom: 1px solid #e9ecef;
+        position: sticky;
+        top: 0;
+        z-index: 100;
+    }
+
+    .dashboard-tabs {
+        border-bottom: 1px solid #e9ecef;
+
+        .nav-tabs {
+            border-bottom: none;
+
+            .nav-link {
+                border: none;
+                border-radius: 0;
+                padding: 12px 24px;
+                font-weight: 500;
+                color: #6c757d;
+                transition: all 0.3s ease;
+
+                &:hover {
+                    color: #007bff;
+                    background-color: transparent;
+                }
+
+                &.active {
+                    color: #007bff;
+                    background-color: transparent;
+                    border-bottom: 3px solid #007bff;
+                }
+            }
+        }
+    }
+
+    .category-filter {
+        .btn-group {
+            .btn {
+                border-radius: 20px;
+                margin-right: 8px;
+                margin-bottom: 8px;
+                padding: 8px 16px;
+                font-size: 0.875rem;
+                transition: all 0.3s ease;
+
+                &:hover {
+                    transform: translateY(-1px);
+                }
+            }
+        }
+    }
+
+    .section-header {
+        h3 {
+            font-weight: 600;
+            margin-bottom: 8px;
+        }
+
+        p {
+            font-size: 0.95rem;
+        }
+    }
+
+    // Cart Badge Animation
+    .cart-badge {
+
+        .badge {
+            color: $white;
+            animation: pulse 2s infinite;
+        }
+    }
+
+    @keyframes pulse {
+        0% {
+            transform: scale(1);
+        }
+        50% {
+            transform: scale(1.1);
+        }
+        100% {
+            transform: scale(1);
+        }
     }
 
     // Responsive Design

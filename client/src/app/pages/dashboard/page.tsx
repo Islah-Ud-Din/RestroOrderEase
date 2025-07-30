@@ -3,243 +3,207 @@
 import React, { useState, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
 import { useUser } from '@/contexts/UserContext';
+import { useCart } from '@/contexts/CartContext';
 import Sidebar from '@/components/Sidebar';
-
-interface DashboardStats {
-  totalOrders: number;
-  totalRevenue: number;
-  pendingOrders: number;
-  completedOrders: number;
-}
-
-interface RecentOrder {
-  id: string;
-  customerName: string;
-  items: string[];
-  total: number;
-  status: 'pending' | 'completed' | 'cancelled';
-  time: string;
-}
+import { MenuItem as MenuItemComponent, Cart as CartComponent } from '@/components/addToCart';
+import { menuItems, getHotDeals, getAllCategories, getMenuByCategory } from '@/data/menuItems';
 
 const Dashboard: React.FC = () => {
-  const router = useRouter();
-  const { accessToken } = useUser(); // assuming only accessToken in context
-  const [stats, setStats] = useState<DashboardStats>({
-    totalOrders: 0,
-    totalRevenue: 0,
-    pendingOrders: 0,
-    completedOrders: 0,
-  });
-  const [recentOrders, setRecentOrders] = useState<RecentOrder[]>([]);
-  const [loading, setLoading] = useState(true);
+    const router = useRouter();
+    const { authToken } = useUser();
+    const { getCartItemCount } = useCart();
+    const [activeTab, setActiveTab] = useState<'hot-deals' | 'menu' | 'cart'>('hot-deals');
+    const [selectedCategory, setSelectedCategory] = useState<string>('All');
+    const [loading, setLoading] = useState(true);
 
-  useEffect(() => {
-    const token = localStorage.getItem('authToken');
-    if (!token) {
-      router.push('/pages/login');
-      return;
+    const hotDeals = getHotDeals();
+    const categories = ['All', ...getAllCategories()];
+
+    useEffect(() => {
+        const token = localStorage.getItem('authToken');
+        if (!token) {
+            router.push('/pages/login');
+            return;
+        }
+
+        // Simulate loading
+        setTimeout(() => setLoading(false), 1000);
+    }, [router, authToken]);
+
+    const handleLogout = () => {
+        localStorage.removeItem('authToken');
+        router.push('/pages/login');
+    };
+
+    const getFilteredMenuItems = () => {
+        if (selectedCategory === 'All') {
+            return menuItems.filter((item) => !item.isHotDeal);
+        }
+        return getMenuByCategory(selectedCategory);
+    };
+
+    if (loading) {
+        return (
+            <div className="dashboard-loading text-center mt-5">
+                <div className="spinner-border text-primary" role="status" />
+                <p className="mt-3">Loading dashboard...</p>
+            </div>
+        );
     }
-  
-    loadDashboardData();
-  }, [router, accessToken, ]);
 
-  const loadDashboardData = async () => {
-    try {
-      // Simulated data
-      setStats({
-        totalOrders: 156,
-        totalRevenue: 12450.75,
-        pendingOrders: 8,
-        completedOrders: 148,
-      });
-
-      setRecentOrders([
-        {
-          id: 'ORD-001',
-          customerName: 'John Doe',
-          items: ['Margherita Pizza', 'Coke'],
-          total: 24.99,
-          status: 'pending',
-          time: '2 min ago',
-        },
-        {
-          id: 'ORD-002',
-          customerName: 'Jane Smith',
-          items: ['Chicken Burger', 'Fries', 'Milkshake'],
-          total: 18.5,
-          status: 'completed',
-          time: '15 min ago',
-        },
-        {
-          id: 'ORD-003',
-          customerName: 'Mike Johnson',
-          items: ['Pasta Carbonara', 'Garlic Bread'],
-          total: 22.75,
-          status: 'pending',
-          time: '25 min ago',
-        },
-        {
-          id: 'ORD-004',
-          customerName: 'Sarah Wilson',
-          items: ['Caesar Salad', 'Soup'],
-          total: 16.25,
-          status: 'completed',
-          time: '45 min ago',
-        },
-      ]);
-    } catch (error) {
-      console.error('Error loading dashboard data:', error);
-    } finally {
-      setLoading(false);
-    }
-  };
-
-  const handleLogout = () => {
-    localStorage.removeItem('authToken');
-    setAccessToken(null);
-    router.push('/pages/login');
-  };
-
-  const getStatusBadge = (status: string) => {
-    switch (status) {
-      case 'pending': return 'bg-warning';
-      case 'completed': return 'bg-success';
-      case 'cancelled': return 'bg-danger';
-      default: return 'bg-secondary';
-    }
-  };
-
-  if (loading) {
     return (
-      <div className="dashboard-loading text-center mt-5">
-        <div className="spinner-border text-primary" role="status" />
-        <p className="mt-3">Loading dashboard...</p>
-      </div>
-    );
-  }
+        <div className="dashboard-page">
+            {/* Sidebar */}
+            {/* <Sidebar /> */}
 
-  return (
-    <div className="dashboard-page">
-      <Sidebar />
-
-      {/* Navbar */}
-      <nav className="navbar navbar-expand-lg navbar-dark bg-primary">
-        <div className="container">
-          <span className="navbar-brand">
-            <h4 className="mb-0">Restaurant Dashboard</h4>
-          </span>
-          <div className="navbar-nav ms-auto">
-            <div className="nav-item dropdown">
-              <span className="nav-link dropdown-toggle" role="button" data-bs-toggle="dropdown">
-                <i className="fas fa-user me-2"></i>
-                Admin
-              </span>
-              <ul className="dropdown-menu">
-                <li><span className="dropdown-item"><i className="fas fa-cog me-2"></i>Settings</span></li>
-                <li><hr className="dropdown-divider" /></li>
-                <li><button className="dropdown-item" onClick={handleLogout}><i className="fas fa-sign-out-alt me-2"></i>Logout</button></li>
-              </ul>
-            </div>
-          </div>
-        </div>
-      </nav>
-
-      {/* Main Content */}
-      <div className="main-content container-fluid">
-        {/* Stats */}
-        <div className="row mb-4">
-          {[
-            { label: 'Total Orders', value: stats.totalOrders, icon: 'fa-shopping-cart', color: 'primary' },
-            { label: 'Total Revenue', value: `$${stats.totalRevenue.toFixed(2)}`, icon: 'fa-dollar-sign', color: 'success' },
-            { label: 'Pending Orders', value: stats.pendingOrders, icon: 'fa-clock', color: 'warning' },
-            { label: 'Completed Orders', value: stats.completedOrders, icon: 'fa-check-circle', color: 'info' },
-          ].map((item, i) => (
-            <div className="col-xl-3 col-md-6 mb-4" key={i}>
-              <div className={`card border-left-${item.color} shadow h-100 py-2`}>
-                <div className="card-body">
-                  <div className="row no-gutters align-items-center">
-                    <div className="col mr-2">
-                      <div className={`text-xs font-weight-bold text-${item.color} text-uppercase mb-1`}>
-                        {item.label}
-                      </div>
-                      <div className="h5 mb-0 font-weight-bold text-gray-800">{item.value}</div>
+            {/* Main Content */}
+            <div className="main-content flex-grow-1">
+                {/* Header */}
+                <div className="dashboard-header bg-white shadow-sm p-3">
+                    <div className="d-flex justify-content-between align-items-center">
+                        <h2 className="mb-0">Restaurant Dashboard</h2>
+                        <div className="d-flex align-items-center gap-3">
+                            <div className="cart-badge position-relative">
+                                <button
+                                    className={`btn ${activeTab === 'cart' ? 'btn-primary' : 'btn-outline-primary'}`}
+                                    onClick={() => setActiveTab('cart')}
+                                >
+                                    <i className="fas fa-shopping-cart me-2"></i>
+                                    Cart
+                                    {getCartItemCount() > 0 && (
+                                        <span className="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">
+                                            {getCartItemCount()}
+                                        </span>
+                                    )}
+                                </button>
+                            </div>
+                            <button className="btn btn-outline-secondary" onClick={handleLogout}>
+                                <i className="fas fa-sign-out-alt me-2"></i>
+                                Logout
+                            </button>
+                        </div>
                     </div>
-                    <div className="col-auto">
-                      <i className={`fas ${item.icon} fa-2x text-gray-300`}></i>
-                    </div>
-                  </div>
                 </div>
-              </div>
-            </div>
-          ))}
-        </div>
 
-        {/* Recent Orders Table */}
-        <div className="card shadow mb-4">
-          <div className="card-header py-3 d-flex justify-content-between align-items-center">
-            <h6 className="m-0 font-weight-bold text-primary">Recent Orders</h6>
-            <button className="btn btn-sm btn-primary">View All</button>
-          </div>
-          <div className="card-body">
-            <div className="table-responsive">
-              <table className="table table-bordered" width="100%">
-                <thead>
-                  <tr>
-                    <th>Order ID</th>
-                    <th>Customer</th>
-                    <th>Items</th>
-                    <th>Total</th>
-                    <th>Status</th>
-                    <th>Time</th>
-                    <th>Actions</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  {recentOrders.map(order => (
-                    <tr key={order.id}>
-                      <td>{order.id}</td>
-                      <td>{order.customerName}</td>
-                      <td><small>{order.items.join(', ')}</small></td>
-                      <td>${order.total.toFixed(2)}</td>
-                      <td><span className={`badge ${getStatusBadge(order.status)}`}>{order.status}</span></td>
-                      <td>{order.time}</td>
-                      <td>
-                        <button className="btn btn-sm btn-outline-primary me-1"><i className="fas fa-eye"></i></button>
-                        <button className="btn btn-sm btn-outline-success me-1"><i className="fas fa-check"></i></button>
-                        <button className="btn btn-sm btn-outline-danger"><i className="fas fa-times"></i></button>
-                      </td>
-                    </tr>
-                  ))}
-                </tbody>
-              </table>
-            </div>
-          </div>
-        </div>
+                {/* Navigation Tabs */}
+                <div className="dashboard-tabs bg-white shadow-sm p-3">
+                    <ul className="nav nav-tabs" id="dashboardTabs" role="tablist">
+                        <li className="nav-item" role="presentation">
+                            <button
+                                className={`nav-link ${activeTab === 'hot-deals' ? 'active' : ''}`}
+                                onClick={() => setActiveTab('hot-deals')}
+                            >
+                                <i className="fas fa-fire me-2"></i>
+                                Hot Deals
+                            </button>
+                        </li>
+                        <li className="nav-item" role="presentation">
+                            <button className={`nav-link ${activeTab === 'menu' ? 'active' : ''}`} onClick={() => setActiveTab('menu')}>
+                                <i className="fas fa-utensils me-2"></i>
+                                Full Menu
+                            </button>
+                        </li>
+                    </ul>
+                </div>
 
-        {/* Quick Actions */}
-        <div className="card shadow">
-          <div className="card-header py-3">
-            <h6 className="m-0 font-weight-bold text-primary">Quick Actions</h6>
-          </div>
-          <div className="card-body row">
-            {[
-              { label: 'Add New Menu Item', icon: 'fa-plus', color: 'primary' },
-              { label: 'Generate Report', icon: 'fa-file-alt', color: 'success' },
-              { label: 'Manage Staff', icon: 'fa-users', color: 'info' },
-              { label: 'System Settings', icon: 'fa-cog', color: 'warning' },
-            ].map((action, i) => (
-              <div className="col-md-3 mb-3" key={i}>
-                <button className={`btn btn-${action.color} btn-block`}>
-                  <i className={`fas ${action.icon} me-2`}></i>
-                  {action.label}
-                </button>
-              </div>
-            ))}
-          </div>
+                {/* Content Area */}
+                <div className="dashboard-content p-4">
+                    {/* Hot Deals Section */}
+                    {activeTab === 'hot-deals' && (
+                        <div className="hot-deals-section">
+                            <div className="section-header mb-4">
+                                <h3 className="text-danger">
+                                    <i className="fas fa-fire me-2"></i>
+                                    Hot Deals - Limited Time Offers!
+                                </h3>
+                                <p className="text-muted">Don&apos;t miss out on these amazing discounts!</p>
+                            </div>
+
+                            <div className="row">
+                                {hotDeals.map((item) => (
+                                    <div key={item.id} className="col-lg-3 col-md-4 col-sm-6 mb-4">
+                                        <MenuItemComponent item={item} />
+                                    </div>
+                                ))}
+                            </div>
+                        </div>
+                    )}
+
+                    {/* Full Menu Section */}
+                    {activeTab === 'menu' && (
+                        <div className="menu-section">
+                            <div className="section-header mb-4">
+                                <h3>
+                                    <i className="fas fa-utensils me-2"></i>
+                                    Our Menu
+                                </h3>
+
+                                {/* Category Filter */}
+                                <div className="category-filter mb-4">
+                                    <div className="btn-group" role="group">
+                                        {categories.map((category) => (
+                                            <button
+                                                key={category}
+                                                type="button"
+                                                className={`btn ${selectedCategory === category ? 'btn-primary' : 'btn-outline-primary'}`}
+                                                onClick={() => setSelectedCategory(category)}
+                                            >
+                                                {category}
+                                            </button>
+                                        ))}
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div className="row">
+                                {getFilteredMenuItems().map((item) => (
+                                    <div key={item.id} className="col-lg-3 col-md-4 col-sm-6 mb-4">
+                                        <MenuItemComponent item={item} />
+                                    </div>
+                                ))}
+                            </div>
+                        </div>
+                    )}
+
+                    {/* Cart Section */}
+                    {activeTab === 'cart' && (
+                        <div className="cart-section">
+                            <div className="section-header mb-4">
+                                <h3>
+                                    <i className="fas fa-shopping-cart me-2"></i>
+                                    Your Order
+                                </h3>
+                            </div>
+
+                            <div className="row">
+                                <div className="col-lg-8">
+                                    <CartComponent />
+                                </div>
+                                <div className="col-lg-4">
+                                    <div className="card">
+                                        <div className="card-body">
+                                            <h5 className="card-title">Order Summary</h5>
+                                            <p className="card-text">Review your items and proceed to checkout when ready.</p>
+                                            <div className="d-grid gap-2">
+                                                <button className="btn btn-success">
+                                                    <i className="fas fa-credit-card me-2"></i>
+                                                    Continue Shopping
+                                                </button>
+                                                <button className="btn btn-outline-secondary">
+                                                    <i className="fas fa-heart me-2"></i>
+                                                    Save for Later
+                                                </button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    )}
+                </div>
+            </div>
         </div>
-      </div>
-    </div>
-  );
+    );
 };
 
 export default Dashboard;
