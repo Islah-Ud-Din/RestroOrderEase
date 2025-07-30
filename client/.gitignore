@@ -1,41 +1,43 @@
 # =========================
-# Server-side ignores
+# Node dependencies
 # =========================
+node_modules/
 
-# Node.js dependencies
-/node_modules
+# =========================
+# Next.js build output
+# =========================
+.next/
+out/
 
-# Build output
-/build
-/dist
-
+# =========================
 # Logs
+# =========================
 npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
 pnpm-debug.log*
-logs
 *.log
-logs/**/*.log
 
-# Environment files
+# =========================
+# Environment variables
+# =========================
 .env*
 !.env.example
 
-# Database files
-*.sqlite
-*.sqlite3
-*.db
-
-# Serverless
-.serverless/
+# =========================
+# TypeScript
+# =========================
+*.tsbuildinfo
+next-env.d.ts
 
 # =========================
-# Client-side ignores
+# Coverage reports
 # =========================
+coverage/
 
+# =========================
 # Yarn/PNPM
-/.pnp
+# =========================
 .pnp.*
 .yarn/*
 !.yarn/patches
@@ -43,35 +45,28 @@ logs/**/*.log
 !.yarn/releases
 !.yarn/versions
 
-# Next.js
-/.next/
-/out/
-
-# Coverage reports
-/coverage
-
-# TypeScript
-*.tsbuildinfo
-next-env.d.ts
-
-# Misc client build
-*.pem
-
 # =========================
-# Shared/General ignores
+# OS-specific files
 # =========================
-
-# OS files
 .DS_Store
 Thumbs.db
 ehthumbs.db
 Desktop.ini
 
-# IDEs and editors
+# =========================
+# IDEs/editors
+# =========================
 .vscode/
 .idea/
 *.sublime-workspace
 *.sublime-project
 
-# Vercel
-.vercel
+# =========================
+# Miscellaneous
+# =========================
+*.pem
+
+# =========================
+# Vercel Deployment
+# =========================
+.vercel/
