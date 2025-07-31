@@ -602,12 +602,7 @@ Pages -> Dashboard
     }
 
     // Cart Badge Animation
-    .cart-badge {
-        .badge {
-            color: $white;
-            animation: pulse 2s infinite;
-        }
-    }
+
 
     @keyframes pulse {
         0% {

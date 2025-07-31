@@ -9,9 +9,13 @@ import RippleEffect from '../../lib/RippleEffect';
 import { useUser } from '@/contexts/UserContext';
 import { useCart } from '@/contexts/CartContext';
 
+import { FaShoppingCart } from 'react-icons/fa';
+
 const Header = () => {
     // Context
     const { logout } = useUser();
+    const { getCartItemCount } = useCart();
+    const cartCount = getCartItemCount();
 
     // Route
     const router = useRouter();
@@ -114,6 +118,18 @@ const Header = () => {
                             )}
                         </div>
                     )}
+
+                    <Link href="/pages/cart" className="rs-link rs-cart">
+                        <FaShoppingCart className="me-2" />
+                        Cart
+                        {cartCount > 0 && (
+                            <span
+                                className="badge"
+                            >
+                                {cartCount}
+                            </span>
+                        )}
+                    </Link>
                     <RippleEffect className="rs-link">
                         <Link href="/pages/contact">Contact</Link>
                     </RippleEffect>

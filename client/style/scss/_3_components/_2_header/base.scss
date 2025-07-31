@@ -30,6 +30,24 @@ Components -> Components
     }
 }
 
+.rs-cart {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    svg {
+        margin-right: 5px;
+    }
+
+    .badge {
+        position: absolute;
+        top: 0;
+        right: 0;
+        color: $white;
+        // animation: pulse 2s infinite;
+        background-color: #dc3545;
+    }
+}
 .rs-logo {
     font-weight: bold;
     font-size: 1.75rem;

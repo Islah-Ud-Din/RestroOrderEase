@@ -5,10 +5,11 @@ import { useRouter } from 'next/navigation';
 import { useUser } from '@/contexts/UserContext';
 import { useCart } from '@/contexts/CartContext';
 
+import Loader from '@/components/Loader/Loader';
+
 import { MenuItem as MenuItemComponent, Cart as CartComponent } from '@/components/addToCart';
 import { menuItems, getHotDeals, getAllCategories, getMenuByCategory } from '@/data/menuItems';
 import { FaShoppingCart, FaFire, FaUtensils, FaCreditCard, FaHeart } from 'react-icons/fa';
-import Sidebar from '@/components/Sidebar';
 import MenuBannerCarousel from '@/components/banner/MenuBannerCarousel';
 
 const Dashboard: React.FC = () => {
@@ -41,12 +42,7 @@ const Dashboard: React.FC = () => {
     };
 
     if (loading) {
-        return (
-            <div className="dashboard-loading text-center mt-5">
-                <div className="spinner-border text-primary" role="status" />
-                <p className="mt-3">Loading dashboard...</p>
-            </div>
-        );
+        return <Loader size={70} />;
     }
 
     return (
@@ -55,28 +51,6 @@ const Dashboard: React.FC = () => {
             <MenuBannerCarousel onCartClick={() => setActiveTab('cart')} cartCount={getCartItemCount()} />
             {/* Main Content */}
             <div className="main-content flex-grow-1">
-                {/* Header */}
-                <div className="dashboard-header bg-white shadow-sm p-3">
-                    <div className="d-flex justify-content-between align-items-center">
-                        <div className="d-flex align-items-center gap-3">
-                            <div className="cart-badge position-relative">
-                                <button
-                                    className={`btn ${activeTab === 'cart' ? 'btn-primary' : 'btn-outline-primary'}`}
-                                    onClick={() => setActiveTab('cart')}
-                                >
-                                    <FaShoppingCart className="me-2" />
-                                    Cart
-                                    {getCartItemCount() > 0 && (
-                                        <span className="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">
-                                            {getCartItemCount()}
-                                        </span>
-                                    )}
-                                </button>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
                 {/* Navigation Tabs */}
                 <div className="dashboard-tabs bg-white shadow-sm p-3">
                     <ul className="nav nav-tabs" id="dashboardTabs" role="tablist">
@@ -150,35 +124,6 @@ const Dashboard: React.FC = () => {
                                         <MenuItemComponent item={item} />
                                     </div>
                                 ))}
-                            </div>
-                        </div>
-                    )}
-
-                    {/* Cart Section */}
-                    {activeTab === 'cart' && (
-                        <div className="cart-section">
-                            <div className="section-header mb-4">
-                                <h3>Your Order</h3>
-                            </div>
-
-                            <div className="row">
-                                <div className="col-lg-8">
-                                    <CartComponent />
-                                </div>
-                                <div className="col-lg-4">
-                                    <div className="card">
-                                        <div className="card-body">
-                                            <h5 className="card-title">Order Summary</h5>
-                                            <p className="card-text">Review your items and proceed to checkout when ready.</p>
-                                            <div className="d-flex justify-content-between">
-                                                <button className="btn btn-success" onClick={() => setActiveTab('menu')}>
-                                                    Continue Shopping
-                                                </button>
-                                                <button className="btn btn-outline-secondary">Save for Later</button>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
                             </div>
                         </div>
                     )}

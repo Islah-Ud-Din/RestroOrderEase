@@ -7913,9 +7913,17 @@ Pages -> Home -> Banner
 /*-------------------------------------------------------------------
 Pages -> Home -> Card
 --------------------------------------------------------------------*/
+.loader-wrapper {
+  min-height: 300px;
+}
+
 /*-------------------------------------------------------------------
 Pages -> Home -> Card
 --------------------------------------------------------------------*/
+.loader-wrapper {
+  min-height: 300px;
+}
+
 /*-------------------------------------------------------------------
  Buttons
 --------------------------------------------------------------------*/
@@ -8466,6 +8474,22 @@ Components -> Components
   justify-content: space-between;
   align-items: center;
   position: relative;
+}
+
+.rs-cart {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.rs-cart svg {
+  margin-right: 5px;
+}
+.rs-cart .badge {
+  position: absolute;
+  top: 0;
+  right: 0;
+  color: #fff;
+  background-color: #dc3545;
 }
 
 .rs-logo {
@@ -9175,10 +9199,6 @@ Pages -> Dashboard
 }
 .dashboard-page .section-header p {
   font-size: 0.95rem;
-}
-.dashboard-page .cart-badge .badge {
-  color: #fff;
-  animation: pulse 2s infinite;
 }
 @keyframes pulse {
   0% {
