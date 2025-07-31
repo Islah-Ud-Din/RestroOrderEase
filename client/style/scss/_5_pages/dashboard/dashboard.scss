@@ -4,7 +4,7 @@ Pages -> Dashboard
 
 // Sidebar Component Styles
 .sidebar {
-    background: linear-gradient(135deg, $primary 0%,  $secondary 100%);
+    background: linear-gradient(135deg, $primary 0%, $secondary 100%);
     color: white;
     height: 100vh;
     width: 280px;
@@ -13,7 +13,7 @@ Pages -> Dashboard
     top: 0;
     z-index: 1000;
     transition: all 0.3s ease;
-    box-shadow: 2px 0 10px rgba(0,0,0,0.1);
+    box-shadow: 2px 0 10px rgba(0, 0, 0, 0.1);
     display: flex;
     flex-direction: column;
 
@@ -52,14 +52,14 @@ Pages -> Dashboard
             display: flex;
             align-items: center;
             justify-content: center;
-            box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
             color: $white;
             border: none;
             transition: all 0.3s ease;
 
             &:hover {
                 transform: scale(1.1);
-                box-shadow: 0 4px 10px rgba(0,0,0,0.3);
+                box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
             }
         }
     }
@@ -67,7 +67,7 @@ Pages -> Dashboard
     // Brand Section
     .sidebar-brand {
         padding: 30px 20px 20px;
-        border-bottom: 1px solid rgba(255,255,255,0.1);
+        border-bottom: 1px solid rgba(255, 255, 255, 0.1);
 
         .brand-content {
             display: flex;
@@ -105,7 +105,7 @@ Pages -> Dashboard
                     display: flex;
                     align-items: center;
                     padding: 15px 20px;
-                    color: rgba(255,255,255,0.8);
+                    color: rgba(255, 255, 255, 0.8);
                     text-decoration: none;
                     border: none;
                     background: transparent;
@@ -115,13 +115,13 @@ Pages -> Dashboard
                     position: relative;
 
                     &:hover {
-                        background: rgba(255,255,255,0.1);
+                        background: rgba(255, 255, 255, 0.1);
                         color: white;
                         transform: translateX(5px);
                     }
 
                     &.active {
-                        background: rgba(255,255,255,0.2);
+                        background: rgba(255, 255, 255, 0.2);
                         color: white;
                         border-right: 4px solid #ffd700;
 
@@ -175,7 +175,7 @@ Pages -> Dashboard
     // Footer/User Section
     .sidebar-footer {
         padding: 20px;
-        border-top: 1px solid rgba(255,255,255,0.1);
+        border-top: 1px solid rgba(255, 255, 255, 0.1);
 
         .user-info {
             display: flex;
@@ -185,7 +185,7 @@ Pages -> Dashboard
             .user-avatar {
                 width: 40px;
                 height: 40px;
-                background: rgba(255,255,255,0.2);
+                background: rgba(255, 255, 255, 0.2);
                 border-radius: 50%;
                 display: flex;
                 align-items: center;
@@ -217,16 +217,128 @@ Pages -> Dashboard
     }
 
     &::-webkit-scrollbar-track {
-        background: rgba(255,255,255,0.1);
+        background: rgba(255, 255, 255, 0.1);
     }
 
     &::-webkit-scrollbar-thumb {
-        background: rgba(255,255,255,0.3);
+        background: rgba(255, 255, 255, 0.3);
         border-radius: 2px;
     }
 
     &::-webkit-scrollbar-thumb:hover {
-        background: rgba(255,255,255,0.5);
+        background: rgba(255, 255, 255, 0.5);
+    }
+}
+
+.rs-banner-wrapper {
+    .rs-banner {
+        height: 100%;
+
+        .rs-banner-content {
+            display: grid;
+            gap: 20px;
+            grid-template-columns: repeat(3, 1fr);
+            position: relative;
+            z-index: 2;
+
+            .rsb-item {
+                position: relative;
+                border-radius: 1rem;
+                overflow: hidden;
+
+                img {
+                    width: 100%;
+                    height: auto;
+                    object-fit: cover;
+                    border-radius: 1.5rem;
+                }
+            }
+
+            .overlay {
+                position: absolute;
+                top: 0;
+                left: 0;
+                width: 100%;
+                height: 100%;
+                background: linear-gradient(to bottom right, rgba(69, 102, 247, 0.1), rgba(69, 102, 247, 0.1), rgba(0, 0, 0, 0.7));
+
+                z-index: 1;
+                pointer-events: none;
+                border-radius: 1rem;
+            }
+        }
+
+        .swiper-pagination-bullets {
+            bottom: 20px;
+
+            .swiper-pagination-bullet {
+                background-color: rgba(255, 255, 255, 0.7);
+                opacity: 1;
+
+                &-active {
+                    background-color: #ffffff;
+                }
+            }
+        }
+    }
+
+    .slide-content {
+        position: relative;
+        height: 100%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+
+        .slide-bg {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            z-index: 1;
+        }
+
+        .overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.4);
+            z-index: 2;
+        }
+
+        .text-content {
+            position: relative;
+            z-index: 3;
+            text-align: center;
+            color: #fff;
+            animation: fadeUp 1s ease-in-out;
+
+            .slide-title {
+                font-size: clamp(2rem, 5vw, 4rem);
+                font-weight: 700;
+                margin-bottom: 1rem;
+            }
+
+            .slide-subtitle {
+                font-size: clamp(1rem, 2vw, 1.5rem);
+                opacity: 0.8;
+            }
+        }
+    }
+}
+
+// Animation
+@keyframes fadeUp {
+    0% {
+        transform: translateY(40px);
+        opacity: 0;
+    }
+    100% {
+        transform: translateY(0px);
+        opacity: 1;
     }
 }
 
@@ -234,7 +346,6 @@ Pages -> Dashboard
 .dashboard-page {
     background-color: #f8f9fc;
     min-height: 100vh;
-
 
     .main-content {
         transition: margin-left 0.3s ease;
@@ -268,7 +379,7 @@ Pages -> Dashboard
         .list-group {
             border-radius: 10px;
             overflow: hidden;
-            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 
             .list-group-item {
                 border: none;
@@ -317,7 +428,7 @@ Pages -> Dashboard
 
         &:hover {
             transform: translateY(-2px);
-            box-shadow: 0 4px 8px rgba(0,0,0,0.1) !important;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1) !important;
         }
 
         .card-header {
@@ -359,7 +470,7 @@ Pages -> Dashboard
 
         &:hover {
             transform: translateY(-1px);
-            box-shadow: 0 4px 8px rgba(0,0,0,0.15);
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
         }
     }
 
@@ -380,7 +491,7 @@ Pages -> Dashboard
 
         &:hover {
             transform: translateY(-5px);
-            box-shadow: 0 8px 25px rgba(0,0,0,0.15);
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
         }
 
         .card-img-top {
@@ -403,7 +514,7 @@ Pages -> Dashboard
             border: 1px solid #e9ecef;
 
             &:hover {
-                box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+                box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
             }
         }
 
@@ -449,14 +560,14 @@ Pages -> Dashboard
                 transition: all 0.3s ease;
 
                 &:hover {
-                    color: #007bff;
+                    color: $primary;
                     background-color: transparent;
                 }
 
                 &.active {
-                    color: #007bff;
+                    color: $primary;
                     background-color: transparent;
-                    border-bottom: 3px solid #007bff;
+                    border-bottom: 3px solid $primary;
                 }
             }
         }
@@ -492,7 +603,6 @@ Pages -> Dashboard
 
     // Cart Badge Animation
     .cart-badge {
-
         .badge {
             color: $white;
             animation: pulse 2s infinite;
@@ -583,7 +693,6 @@ Pages -> Dashboard
             .pb-text {
                 font-weight: bold;
             }
-
         }
     }
 }

@@ -2,6 +2,19 @@
 
 import React, { useState } from 'react';
 import { useRouter, usePathname } from 'next/navigation';
+import {
+  FaTachometerAlt,
+  FaUtensils,
+  FaShoppingCart,
+  FaUsers,
+  FaBoxes,
+  FaChartBar,
+  FaUserTie,
+  FaCog,
+  FaChevronLeft,
+  FaChevronRight,
+  FaUser
+} from 'react-icons/fa';
 
 interface SidebarItem {
     id: string;
@@ -25,50 +38,50 @@ const Sidebar: React.FC<SidebarProps> = ({ className = '', onItemClick }) => {
         {
             id: 'dashboard',
             label: 'Dashboard',
-            icon: 'fas fa-tachometer-alt',
+            icon: 'FaTachometerAlt',
             path: '/pages/dashboard'
         },
         {
             id: 'menu',
             label: 'Menu Management',
-            icon: 'fas fa-utensils',
+            icon: 'FaUtensils',
             path: '/pages/menu'
         },
         {
             id: 'orders',
             label: 'Orders',
-            icon: 'fas fa-shopping-cart',
+            icon: 'FaShoppingCart',
             path: '/pages/orders',
             badge: 8
         },
         {
             id: 'customers',
             label: 'Customers',
-            icon: 'fas fa-users',
+            icon: 'FaUsers',
             path: '/pages/customers'
         },
         {
             id: 'inventory',
             label: 'Inventory',
-            icon: 'fas fa-boxes',
+            icon: 'FaBoxes',
             path: '/pages/inventory'
         },
         {
             id: 'reports',
             label: 'Reports',
-            icon: 'fas fa-chart-bar',
+            icon: 'FaChartBar',
             path: '/pages/reports'
         },
         {
             id: 'staff',
             label: 'Staff Management',
-            icon: 'fas fa-user-tie',
+            icon: 'FaUserTie',
             path: '/pages/staff'
         },
         {
             id: 'settings',
             label: 'Settings',
-            icon: 'fas fa-cog',
+            icon: 'FaCog',
             path: '/pages/settings'
         }
     ];
@@ -85,23 +98,37 @@ const Sidebar: React.FC<SidebarProps> = ({ className = '', onItemClick }) => {
         return pathname === path;
     };
 
+    const renderIcon = (iconName: string) => {
+        const iconMap: { [key: string]: React.ReactElement } = {
+            'FaTachometerAlt': <FaTachometerAlt />,
+            'FaUtensils': <FaUtensils />,
+            'FaShoppingCart': <FaShoppingCart />,
+            'FaUsers': <FaUsers />,
+            'FaBoxes': <FaBoxes />,
+            'FaChartBar': <FaChartBar />,
+            'FaUserTie': <FaUserTie />,
+            'FaCog': <FaCog />
+        };
+        return iconMap[iconName] || <FaTachometerAlt />;
+    };
+
     return (
         <div className={`sidebar ${className} ${collapsed ? 'collapsed' : ''}`}>
             {/* Toggle Button */}
             <div className="sidebar-toggle">
-                <button 
+                                <button
                     className="btn btn-link btn-sm"
                     onClick={() => setCollapsed(!collapsed)}
                     title={collapsed ? 'Expand Sidebar' : 'Collapse Sidebar'}
                 >
-                    <i className={`fas fa-${collapsed ? 'chevron-right' : 'chevron-left'}`}></i>
+                    {collapsed ? <FaChevronRight /> : <FaChevronLeft />}
                 </button>
             </div>
 
             {/* Logo/Brand */}
             <div className="sidebar-brand">
                 <div className="brand-content">
-                    <i className="fas fa-utensils brand-icon"></i>
+                    <FaUtensils className="brand-icon" />
                     {!collapsed && <span className="brand-text">Restaurant</span>}
                 </div>
             </div>
@@ -116,9 +143,9 @@ const Sidebar: React.FC<SidebarProps> = ({ className = '', onItemClick }) => {
                                 onClick={() => handleItemClick(item)}
                                 title={collapsed ? item.label : ''}
                             >
-                                <div className="nav-icon">
-                                    <i className={item.icon}></i>
-                                </div>
+                                                    <div className="nav-icon">
+                        {renderIcon(item.icon)}
+                    </div>
                                 {!collapsed && (
                                     <div className="nav-content">
                                         <span className="nav-label">{item.label}</span>
@@ -136,9 +163,9 @@ const Sidebar: React.FC<SidebarProps> = ({ className = '', onItemClick }) => {
             {/* User Section */}
             <div className="sidebar-footer">
                 <div className="user-info">
-                    <div className="user-avatar">
-                        <i className="fas fa-user"></i>
-                    </div>
+                                    <div className="user-avatar">
+                    <FaUser />
+                </div>
                     {!collapsed && (
                         <div className="user-details">
                             <div className="user-name">Admin User</div>
@@ -151,4 +178,4 @@ const Sidebar: React.FC<SidebarProps> = ({ className = '', onItemClick }) => {
     );
 };
 
-export default Sidebar; 
+export default Sidebar;

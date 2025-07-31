@@ -4,9 +4,12 @@ import React, { useState, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
 import { useUser } from '@/contexts/UserContext';
 import { useCart } from '@/contexts/CartContext';
-import Sidebar from '@/components/Sidebar';
+
 import { MenuItem as MenuItemComponent, Cart as CartComponent } from '@/components/addToCart';
 import { menuItems, getHotDeals, getAllCategories, getMenuByCategory } from '@/data/menuItems';
+import { FaShoppingCart, FaFire, FaUtensils, FaCreditCard, FaHeart } from 'react-icons/fa';
+import Sidebar from '@/components/Sidebar';
+import MenuBannerCarousel from '@/components/banner/MenuBannerCarousel';
 
 const Dashboard: React.FC = () => {
     const router = useRouter();
@@ -30,11 +33,6 @@ const Dashboard: React.FC = () => {
         setTimeout(() => setLoading(false), 1000);
     }, [router, authToken]);
 
-    const handleLogout = () => {
-        localStorage.removeItem('authToken');
-        router.push('/pages/login');
-    };
-
     const getFilteredMenuItems = () => {
         if (selectedCategory === 'All') {
             return menuItems.filter((item) => !item.isHotDeal);
@@ -53,22 +51,20 @@ const Dashboard: React.FC = () => {
 
     return (
         <div className="dashboard-page">
-            {/* Sidebar */}
-            {/* <Sidebar /> */}
-
+            {/* Banner Carousel */}
+            <MenuBannerCarousel onCartClick={() => setActiveTab('cart')} cartCount={getCartItemCount()} />
             {/* Main Content */}
             <div className="main-content flex-grow-1">
                 {/* Header */}
                 <div className="dashboard-header bg-white shadow-sm p-3">
                     <div className="d-flex justify-content-between align-items-center">
-                        <h2 className="mb-0">Restaurant Dashboard</h2>
                         <div className="d-flex align-items-center gap-3">
                             <div className="cart-badge position-relative">
                                 <button
                                     className={`btn ${activeTab === 'cart' ? 'btn-primary' : 'btn-outline-primary'}`}
                                     onClick={() => setActiveTab('cart')}
                                 >
-                                    <i className="fas fa-shopping-cart me-2"></i>
+                                    <FaShoppingCart className="me-2" />
                                     Cart
                                     {getCartItemCount() > 0 && (
                                         <span className="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">
@@ -77,10 +73,6 @@ const Dashboard: React.FC = () => {
                                     )}
                                 </button>
                             </div>
-                            <button className="btn btn-outline-secondary" onClick={handleLogout}>
-                                <i className="fas fa-sign-out-alt me-2"></i>
-                                Logout
-                            </button>
                         </div>
                     </div>
                 </div>
@@ -93,13 +85,13 @@ const Dashboard: React.FC = () => {
                                 className={`nav-link ${activeTab === 'hot-deals' ? 'active' : ''}`}
                                 onClick={() => setActiveTab('hot-deals')}
                             >
-                                <i className="fas fa-fire me-2"></i>
+                                <FaFire className="me-2" />
                                 Hot Deals
                             </button>
                         </li>
                         <li className="nav-item" role="presentation">
                             <button className={`nav-link ${activeTab === 'menu' ? 'active' : ''}`} onClick={() => setActiveTab('menu')}>
-                                <i className="fas fa-utensils me-2"></i>
+                                <FaUtensils className="me-2" />
                                 Full Menu
                             </button>
                         </li>
@@ -113,7 +105,7 @@ const Dashboard: React.FC = () => {
                         <div className="hot-deals-section">
                             <div className="section-header mb-4">
                                 <h3 className="text-danger">
-                                    <i className="fas fa-fire me-2"></i>
+                                    <FaFire className="me-2" />
                                     Hot Deals - Limited Time Offers!
                                 </h3>
                                 <p className="text-muted">Don&apos;t miss out on these amazing discounts!</p>
@@ -133,10 +125,7 @@ const Dashboard: React.FC = () => {
                     {activeTab === 'menu' && (
                         <div className="menu-section">
                             <div className="section-header mb-4">
-                                <h3>
-                                    <i className="fas fa-utensils me-2"></i>
-                                    Our Menu
-                                </h3>
+                                <h3>Our Menu</h3>
 
                                 {/* Category Filter */}
                                 <div className="category-filter mb-4">
@@ -169,10 +158,7 @@ const Dashboard: React.FC = () => {
                     {activeTab === 'cart' && (
                         <div className="cart-section">
                             <div className="section-header mb-4">
-                                <h3>
-                                    <i className="fas fa-shopping-cart me-2"></i>
-                                    Your Order
-                                </h3>
+                                <h3>Your Order</h3>
                             </div>
 
                             <div className="row">
@@ -184,15 +170,11 @@ const Dashboard: React.FC = () => {
                                         <div className="card-body">
                                             <h5 className="card-title">Order Summary</h5>
                                             <p className="card-text">Review your items and proceed to checkout when ready.</p>
-                                            <div className="d-grid gap-2">
-                                                <button className="btn btn-success">
-                                                    <i className="fas fa-credit-card me-2"></i>
+                                            <div className="d-flex justify-content-between">
+                                                <button className="btn btn-success" onClick={() => setActiveTab('menu')}>
                                                     Continue Shopping
                                                 </button>
-                                                <button className="btn btn-outline-secondary">
-                                                    <i className="fas fa-heart me-2"></i>
-                                                    Save for Later
-                                                </button>
+                                                <button className="btn btn-outline-secondary">Save for Later</button>
                                             </div>
                                         </div>
                                     </div>

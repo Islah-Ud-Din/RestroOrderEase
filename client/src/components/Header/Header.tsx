@@ -1,14 +1,28 @@
 'use client';
 
 import React, { useState, useRef, useEffect } from 'react';
+import { useRouter } from 'next/navigation';
+
 import Link from 'next/link';
+
 import RippleEffect from '../../lib/RippleEffect';
+import { useUser } from '@/contexts/UserContext';
+import { useCart } from '@/contexts/CartContext';
 
 const Header = () => {
+    // Context
+    const { logout } = useUser();
+
+    // Route
+    const router = useRouter();
+
+    // States
     const [showDropdown, setShowDropdown] = useState(false);
     const [blur, setBlur] = useState(false);
-    const [navOpen, setNavOpen] = useState(false); // for mobile nav
+    const [navOpen, setNavOpen] = useState(false);
     const [isMobile, setIsMobile] = useState(false);
+
+    // Ref
     const dropdownTimeout = useRef<NodeJS.Timeout | null>(null);
     const headerRef = useRef<HTMLHeadingElement>(null);
 
@@ -37,15 +51,20 @@ const Header = () => {
     const closeDropdown = () => {
         dropdownTimeout.current = setTimeout(() => setShowDropdown(false), 120);
     };
+
     const toggleDropdown = () => setShowDropdown((prev) => !prev);
 
     // Hamburger toggle
     const toggleNav = () => setNavOpen((prev) => !prev);
 
+    const handleLogout = () => {
+        logout();
+        router.push('/');
+    };
     return (
         <header className={`rs-header${blur ? ' blur-bg' : ''}`} ref={headerRef}>
             <div className="rs-container">
-                <div className="rs-logo">🍽️ Restaurant</div>
+                <div className="rs-logo">Restaurant</div>
                 <button className="rs-hamburger" onClick={toggleNav} aria-label="Toggle navigation">
                     <span></span>
                     <span></span>
@@ -101,6 +120,10 @@ const Header = () => {
                     <RippleEffect className="rs-link">
                         <Link href="/pages/payment">Payment</Link>
                     </RippleEffect>
+
+                    <button className="btn btn-outline-primary" onClick={handleLogout}>
+                        Logout
+                    </button>
                 </nav>
             </div>
         </header>

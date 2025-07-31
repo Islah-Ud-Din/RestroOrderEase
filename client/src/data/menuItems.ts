@@ -9,7 +9,7 @@ export const menuItems: MenuItem[] = [
     price: 12.99,
     originalPrice: 16.99,
     discount: 25,
-    image: 'https://images.unsplash.com/photo-1568901346375-23c9450c58cd?w=400&h=300&fit=crop',
+    image: 'https://images.unsplash.com/photo-1568901346375-23c9450c58cd?w=800&h=600&fit=crop',
     category: 'Burgers',
     isHotDeal: true,
   },
@@ -20,7 +20,7 @@ export const menuItems: MenuItem[] = [
     price: 14.99,
     originalPrice: 19.99,
     discount: 25,
-    image: 'https://images.unsplash.com/photo-1604382354936-07c5d9983bd3?w=400&h=300&fit=crop',
+    image: 'https://images.unsplash.com/photo-1604382354936-07c5d9983bd3?w=800&h=600&fit=crop',
     category: 'Pizza',
     isHotDeal: true,
   },
@@ -31,7 +31,7 @@ export const menuItems: MenuItem[] = [
     price: 10.99,
     originalPrice: 13.99,
     discount: 21,
-    image: 'https://images.unsplash.com/photo-1546793665-c74683f339c1?w=400&h=300&fit=crop',
+    image: 'https://images.unsplash.com/photo-1546793665-c74683f339c1?w=800&h=600&fit=crop',
     category: 'Salads',
     isHotDeal: true,
   },
@@ -42,7 +42,7 @@ export const menuItems: MenuItem[] = [
     price: 5.99,
     originalPrice: 7.99,
     discount: 25,
-    image: 'https://images.unsplash.com/photo-1572490122747-3968b75cc699?w=400&h=300&fit=crop',
+    image: 'https://images.unsplash.com/photo-1572490122747-3968b75cc699?w=800&h=600&fit=crop',
     category: 'Beverages',
     isHotDeal: true,
   },
@@ -53,7 +53,7 @@ export const menuItems: MenuItem[] = [
     name: 'Bacon Deluxe Burger',
     description: 'Beef patty with crispy bacon, cheddar cheese, and caramelized onions',
     price: 15.99,
-    image: 'https://images.unsplash.com/photo-1553979459-d2229ba7433b?w=400&h=300&fit=crop',
+    image: 'https://images.unsplash.com/photo-1553979459-d2229ba7433b?w=800&h=600&fit=crop',
     category: 'Burgers',
   },
   {
@@ -61,7 +61,7 @@ export const menuItems: MenuItem[] = [
     name: 'Veggie Burger',
     description: 'Plant-based patty with avocado, sprouts, and vegan cheese',
     price: 13.99,
-    image: 'https://images.unsplash.com/photo-1520072959219-c595dc870360?w=400&h=300&fit=crop',
+    image: 'https://images.unsplash.com/photo-1520072959219-c595dc870360?w=800&h=600&fit=crop',
     category: 'Burgers',
   },
   {
@@ -69,7 +69,7 @@ export const menuItems: MenuItem[] = [
     name: 'Pepperoni Pizza',
     description: 'Classic pepperoni with mozzarella cheese and tomato sauce',
     price: 18.99,
-    image: 'https://images.unsplash.com/photo-1628840042765-356cda07504e?w=400&h=300&fit=crop',
+    image: 'https://images.unsplash.com/photo-1628840042765-356cda07504e?w=800&h=600&fit=crop',
     category: 'Pizza',
   },
   {
@@ -77,7 +77,7 @@ export const menuItems: MenuItem[] = [
     name: 'BBQ Chicken Pizza',
     description: 'BBQ sauce, grilled chicken, red onions, and cilantro',
     price: 20.99,
-    image: 'https://images.unsplash.com/photo-1513104890138-7c749659a591?w=400&h=300&fit=crop',
+    image: 'https://images.unsplash.com/photo-1513104890138-7c749659a591?w=800&h=600&fit=crop',
     category: 'Pizza',
   },
   {
@@ -85,7 +85,7 @@ export const menuItems: MenuItem[] = [
     name: 'Spaghetti Carbonara',
     description: 'Pasta with eggs, cheese, pancetta, and black pepper',
     price: 16.99,
-    image: 'https://images.unsplash.com/photo-1621996346565-e3dbc353d2e5?w=400&h=300&fit=crop',
+    image: 'https://images.unsplash.com/photo-1504674900247-0877df9cc836?w=800&h=600&fit=crop',
     category: 'Pasta',
   },
   {
@@ -93,7 +93,7 @@ export const menuItems: MenuItem[] = [
     name: 'Fettuccine Alfredo',
     description: 'Fettuccine pasta with creamy alfredo sauce and parmesan cheese',
     price: 15.99,
-    image: 'https://images.unsplash.com/photo-1551183053-bf91a1d81141?w=400&h=300&fit=crop',
+    image: 'https://images.unsplash.com/photo-1551183053-bf91a1d81141?w=800&h=600&fit=crop',
     category: 'Pasta',
   },
   {
@@ -101,7 +101,7 @@ export const menuItems: MenuItem[] = [
     name: 'Greek Salad',
     description: 'Mixed greens, feta cheese, olives, cucumber, and red onion',
     price: 12.99,
-    image: 'https://images.unsplash.com/photo-1540420773420-3366772f4999?w=400&h=300&fit=crop',
+    image: 'https://images.unsplash.com/photo-1540420773420-3366772f4999?w=800&h=600&fit=crop',
     category: 'Salads',
   },
   {
@@ -109,7 +109,7 @@ export const menuItems: MenuItem[] = [
     name: 'Cobb Salad',
     description: 'Mixed greens, grilled chicken, bacon, eggs, avocado, and blue cheese',
     price: 14.99,
-    image: 'https://images.unsplash.com/photo-1512621776951-a57141f2eefd?w=400&h=300&fit=crop',
+    image: 'https://images.unsplash.com/photo-1512621776951-a57141f2eefd?w=800&h=600&fit=crop',
     category: 'Salads',
   },
   {
@@ -117,7 +117,7 @@ export const menuItems: MenuItem[] = [
     name: 'Chocolate Lava Cake',
     description: 'Warm chocolate cake with molten chocolate center, served with vanilla ice cream',
     price: 8.99,
-    image: 'https://images.unsplash.com/photo-1563805042-7684c019e1cb?w=400&h=300&fit=crop',
+    image: 'https://images.unsplash.com/photo-1563805042-7684c019e1cb?w=800&h=600&fit=crop',
     category: 'Desserts',
   },
   {
@@ -125,7 +125,7 @@ export const menuItems: MenuItem[] = [
     name: 'New York Cheesecake',
     description: 'Creamy cheesecake with graham cracker crust and berry compote',
     price: 7.99,
-    image: 'https://images.unsplash.com/photo-1533134242443-d4fd215305ad?w=400&h=300&fit=crop',
+    image: 'https://images.unsplash.com/photo-1533134242443-d4fd215305ad?w=800&h=600&fit=crop',
     category: 'Desserts',
   },
   {
@@ -133,7 +133,7 @@ export const menuItems: MenuItem[] = [
     name: 'Fresh Lemonade',
     description: 'Homemade lemonade with fresh lemons and a hint of mint',
     price: 4.99,
-    image: 'https://images.unsplash.com/photo-1621263764928-df1444c5e859?w=400&h=300&fit=crop',
+    image: 'https://images.unsplash.com/photo-1621263764928-df1444c5e859?w=800&h=600&fit=crop',
     category: 'Beverages',
   },
   {
@@ -141,7 +141,7 @@ export const menuItems: MenuItem[] = [
     name: 'Iced Coffee',
     description: 'Cold brewed coffee with cream and simple syrup',
     price: 4.49,
-    image: 'https://images.unsplash.com/photo-1461023058943-07fcbe16d735?w=400&h=300&fit=crop',
+    image: 'https://images.unsplash.com/photo-1461023058943-07fcbe16d735?w=800&h=600&fit=crop',
     category: 'Beverages',
   },
   {
@@ -149,7 +149,7 @@ export const menuItems: MenuItem[] = [
     name: 'French Fries',
     description: 'Crispy golden fries seasoned with sea salt',
     price: 4.99,
-    image: 'https://images.unsplash.com/photo-1573080496219-bb080dd4f877?w=400&h=300&fit=crop',
+    image: 'https://images.unsplash.com/photo-1573080496219-bb080dd4f877?w=800&h=600&fit=crop',
     category: 'Sides',
   },
   {
@@ -157,7 +157,7 @@ export const menuItems: MenuItem[] = [
     name: 'Onion Rings',
     description: 'Beer-battered onion rings served with ranch dipping sauce',
     price: 5.99,
-    image: 'https://images.unsplash.com/photo-1624378439575-d8705ad7ae80?w=400&h=300&fit=crop',
+    image: 'https://images.unsplash.com/photo-1502741338009-cac2772e18bc?w=800&h=600&fit=crop',
     category: 'Sides',
   },
 ];
