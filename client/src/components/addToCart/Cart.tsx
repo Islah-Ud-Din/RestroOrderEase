@@ -1,21 +1,75 @@
 'use client';
 
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { useCart } from '@/contexts/CartContext';
-import { FaShoppingCart, FaTrash, FaMinus, FaPlus, FaCreditCard, FaFire } from 'react-icons/fa';
+import GoogleMapComponent from '@/components/GoogleMap/GoogleMap';
+
+import { FaTrash, FaMinus, FaPlus, FaCreditCard, FaFire } from 'react-icons/fa';
 
 const Cart: React.FC = () => {
+    const GOOGLE_API_KEY = 'AIzaSyAuIR2zgDpOIjcAS3DlQ31HjbQHeloSd_I';
+    const [latlng, setLatlng] = useState<{ lat: number; lng: number } | null>(null);
+    const [location, setLocation] = useState<string>('');
+    const [locationError, setLocationError] = useState<string>('');
+
     const { cartItems, removeFromCart, updateQuantity, clearCart, getCartTotal, getCartItemCount } = useCart();
+
+    const handleMapPick = async (lat: number, lng: number) => {
+        setLatlng({ lat, lng });
+        try {
+            const res = await fetch(`https://api.opencagedata.com/geocode/v1/json?q=${lat}+${lng}&key=65166b14ce784a67a77a4d47a56d403d`);
+            const data = await res.json();
+            const components = data.results[0]?.components || {};
+            const city = components.city || components.town || components.village || '';
+            const state = components.state || '';
+            const country = components.country || '';
+            setLocation(`${city}${city ? ', ' : ''}${state}${state ? ', ' : ''}${country}`);
+            setLocationError('');
+        } catch (err) {
+            setLocationError('Failed to fetch location details.');
+        }
+    };
 
     const handleQuantityChange = (itemId: string, newQuantity: number) => {
         updateQuantity(itemId, newQuantity);
     };
 
     const handleCheckout = () => {
-        // TODO: Implement checkout functionality
         console.log('Proceeding to checkout with items:', cartItems);
         alert('Checkout functionality will be implemented here!');
     };
+
+    useEffect(() => {
+        if ('geolocation' in navigator) {
+            navigator.geolocation.getCurrentPosition(
+                async (position) => {
+                    const { latitude, longitude } = position.coords;
+
+                    setLatlng({ lat: latitude, lng: longitude });
+                    try {
+                        const res = await fetch(
+                            `https://api.opencagedata.com/geocode/v1/json?q=${latitude}+${longitude}&key=65166b14ce784a67a77a4d47a56d403d`
+                        );
+                        const data = await res.json();
+
+                        console.log('data', data);
+                        const components = data.results[0]?.components || {};
+                        const city = components.city || components.town || components.village || '';
+                        const state = components.state || '';
+                        const country = components.country || '';
+                        setLocation(`${city}${city ? ', ' : ''}${state}${state ? ', ' : ''}${country}`);
+                    } catch (err) {
+                        setLocationError('Failed to fetch location details.');
+                    }
+                },
+                (err) => {
+                    setLocationError('User denied location or an error occurred.');
+                }
+            );
+        } else {
+            setLocationError('Geolocation not supported.');
+        }
+    }, []);
 
     if (cartItems.length === 0) {
         return (
@@ -28,6 +82,14 @@ const Cart: React.FC = () => {
 
     return (
         <div className="cart-container">
+            <div style={{ marginBottom: '1rem' }}>
+                <strong>Your Location: </strong>
+                {location ? <span>{location}</span> : <span style={{ color: 'red' }}>{locationError || 'Fetching location...'}</span>}
+            </div>
+            <div style={{ height: 300, marginBottom: 20 }}>
+                <GoogleMapComponent latlng={latlng} onPick={handleMapPick} apiKey={GOOGLE_API_KEY} />
+            </div>
+
             <div className="cart-header d-flex justify-content-between align-items-center mb-3">
                 <h5 className="mb-0">Shopping Cart ({getCartItemCount()} items)</h5>
                 <button className="btn btn-sm btn-outline-danger" onClick={clearCart}>
@@ -126,7 +188,11 @@ const Cart: React.FC = () => {
                         <span className="fw-bold fs-4 text-primary">${(getCartTotal() * 1.085).toFixed(2)}</span>
                     </div>
 
-                    <button className="btn btn-success w-100 d-flex align-items-center justify-content-center" onClick={handleCheckout}>
+                    <button
+                        className="btn btn-success w-100 d-flex align-items-center justify-content-center"
+                        disabled={!location}
+                        onClick={handleCheckout}
+                    >
                         <FaCreditCard className="me-2" style={{ marginRight: '10px' }} />
                         Proceed to Checkout
                     </button>

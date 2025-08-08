@@ -1,0 +1,131 @@
+/*-------------------------------------------------------------------
+Pages -> Dashboard - POS System
+--------------------------------------------------------------------*/
+.rs-btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 500;
+    border-radius: 6px;
+    padding: 0.5rem 1rem;
+    font-size: 14px;
+    line-height: 1.5;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    border: 1px solid transparent;
+    gap: 6px;
+
+    svg {
+        width: 1.25rem;
+        height: 1.25rem;
+        margin-left: 0.5rem;
+        fill: currentColor;
+        flex-shrink: 0;
+        transition: transform 0.3s ease;
+
+        .rs-btn:hover & {
+          transform: translateX(4px);
+        }
+      }
+
+
+    &.rs-btn-primary {
+        background-color: $primary;
+        border-color: $primary;
+        color: #fff;
+
+        &:hover {
+            background-color: #6d84f9;
+            border-color: #6d84f9;
+        }
+
+        &.rs-btn-outline {
+            background: transparent;
+            color: $primary;
+
+            &:hover {
+                background-color: rgba(69, 102, 247, 0.1);
+            }
+        }
+    }
+
+    &.rs-btn-secondary {
+        background-color: #6c757d;
+        border-color: #6c757d;
+        color: #fff;
+
+        &:hover {
+            background-color: #868e96;
+            border-color: #868e96;
+        }
+
+        &.rs-btn-outline {
+            background: transparent;
+            color: #6c757d;
+
+            &:hover {
+                background-color: rgba(108, 117, 125, 0.1);
+            }
+        }
+    }
+
+    &.rs-btn-danger {
+        background-color: #ff4d4f;
+        border-color: #ff4d4f;
+        color: #fff;
+
+        &:hover {
+            background-color: #ff7875;
+            border-color: #ff7875;
+        }
+
+        &.rs-btn-outline {
+            background: transparent;
+            color: #ff4d4f;
+
+            &:hover {
+                background-color: rgba(255, 77, 79, 0.1);
+            }
+        }
+    }
+
+    &.rs-btn-info {
+        background-color: #13c2c2;
+        border-color: #13c2c2;
+        color: #fff;
+
+        &:hover {
+            background-color: #36cfc9;
+            border-color: #36cfc9;
+        }
+
+        &.rs-btn-outline {
+            background: transparent;
+            color: #13c2c2;
+
+            &:hover {
+                background-color: rgba(19, 194, 194, 0.1);
+            }
+        }
+    }
+
+    &.rs-btn-warning {
+        background-color: #faad14;
+        border-color: #faad14;
+        color: #fff;
+
+        &:hover {
+            background-color: #ffc53d;
+            border-color: #ffc53d;
+        }
+
+        &.rs-btn-outline {
+            background: transparent;
+            color: #faad14;
+
+            &:hover {
+                background-color: rgba(250, 173, 20, 0.1);
+            }
+        }
+    }
+}

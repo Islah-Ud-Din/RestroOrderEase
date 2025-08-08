@@ -5,10 +5,10 @@ import 'swiper/css/pagination';
 import { useState } from 'react';
 import { Swiper, SwiperSlide } from 'swiper/react';
 import { Autoplay, Pagination } from 'swiper/modules';
-import { getHotDeals } from '@/data/menuItems';
+import { bannerImages } from '@/data/bannerImage';
 import { motion } from 'framer-motion';
 
-const hotDeals = getHotDeals();
+const hotDeals = bannerImages;
 
 // Shuffle utility
 function shuffleArray<T>(array: T[]): T[] {
@@ -26,7 +26,7 @@ export default function MenuBannerCarousel() {
     const slides = Array.from({ length: 5 }, () => shuffleArray(hotDeals).slice(0, 3));
 
     return (
-        <div className="rs-banner-wrapper p-4 rounded-lg">
+        <div className="rs-banner-wrapper">
             <Swiper
                 modules={[Autoplay, Pagination]}
                 autoplay={{ delay: 5000 }}
@@ -69,7 +69,7 @@ export default function MenuBannerCarousel() {
                                     >
                                         <img
                                             src={item.image}
-                                            alt={item.name}
+                                            alt={item.title}
                                             width={500}
                                             height={500}
                                             className="image-fluid object-cover"

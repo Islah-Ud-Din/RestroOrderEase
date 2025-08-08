@@ -12,7 +12,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
 
   try {
     // Forward the data to the backend server (adjust the URL as needed)
-    const backendRes = await fetch("http://localhost:5000/api/contact", {
+    const backendRes = await fetch("http://localhost:6000/api/contact", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ name, email, message }),

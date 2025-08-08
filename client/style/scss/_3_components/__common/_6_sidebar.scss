@@ -1,0 +1,134 @@
+/*-------------------------------------------------------------------
+Pages -> Home -> Card
+--------------------------------------------------------------------*/
+.sidebar {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 240px;
+    height: 100vh;
+    background: #f8f9fa;
+    box-shadow: 2px 0 8px rgba(0, 0, 0, 0.05);
+    display: flex;
+    flex-direction: column;
+    transition: width 0.25s ease;
+    z-index: 1;
+
+
+    &.collapsed {
+        width: 80px;
+
+        .rs-logo,
+        .label,
+        .user-details {
+            display: none;
+        }
+        .icon {
+            margin: 0 auto;
+        }
+    }
+
+    .rs-side-head {
+        display: flex;
+        align-items: center;
+        padding: 20px;
+
+        .rs-logo {
+            margin-left: 10px;
+            font-weight: 600;
+            color: #212529;
+        }
+
+        .rs-toggle {
+            text-align: right;
+
+            button {
+                border: red;
+                font-size: 1.1rem;
+                cursor: pointer;
+            }
+        }
+    }
+
+    nav {
+        flex: 1;
+        overflow-y: auto;
+        ul {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+
+            li {
+                &.active button {
+                    background: rgba(0, 123, 255, 0.15);
+                    color: #0d6efd;
+                    font-weight: 600;
+                }
+                button {
+                    width: 100%;
+                    display: flex;
+                    align-items: center;
+                    padding: 12px 20px;
+                    border: none;
+                    background: none;
+                    color: #495057;
+                    font-size: 0.95rem;
+                    border-radius: 4px;
+                    transition: background 0.2s;
+
+                    &:hover {
+                        background: rgba(0, 123, 255, 0.1);
+                    }
+
+                    .icon {
+                        display: flex;
+                        align-items: center;
+                        justify-content: center;
+                        min-width: 36px;
+                        min-height: 36px;
+                        border-radius: 6px;
+                    }
+                    .label {
+                        margin-left: 10px;
+                    }
+                    .badge {
+                        margin-left: auto;
+                        background: #dc3545;
+                        color: #fff;
+                        font-size: 0.7rem;
+                        padding: 2px 6px;
+                        border-radius: 10px;
+                    }
+                }
+            }
+        }
+    }
+
+    .footer {
+        padding: 20px;
+        border-top: 1px solid #dee2e6;
+        display: flex;
+        align-items: center;
+
+        .avatar {
+            width: 36px;
+            height: 36px;
+            background: #e9ecef;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .user-details {
+            margin-left: 10px;
+            .name {
+                font-weight: 600;
+                color: #212529;
+            }
+            .role {
+                font-size: 0.85rem;
+                color: #6c757d;
+            }
+        }
+    }
+}

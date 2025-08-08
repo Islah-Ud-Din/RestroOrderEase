@@ -4,7 +4,7 @@ const Footer = () => (
   <footer className="rs-footer">
     <div className="rs-footer-content">
       <div className="rs-footer-brand">
-        <span className="rs-footer-logo">🍽️ Restaurant Management System</span>
+        <span className="rs-footer-logo">Restaurant</span>
       </div>
       <nav className="rs-footer-nav">
         <a href="/about">About</a>

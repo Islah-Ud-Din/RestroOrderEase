@@ -1,37 +1,451 @@
 /*-------------------------------------------------------------------
-Pages -> login
+Pages -> Modern Signup
 --------------------------------------------------------------------*/
-.signup-page {
-    .container {
-        padding: 120px 0;
+// Modern Signup Page
+.modern-signup-page {
+    min-height: 100vh;
+    background: $primary-light;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
+
+    .signup-container {
+        width: 100%;
+        max-width: 1200px;
+        background: $white;
+        border-radius: 20px;
+        box-shadow: $shadow-xl;
+        overflow: hidden;
+        display: flex;
+        min-height: 600px;
+
+        @media (max-width: 768px) {
+            flex-direction: column;
+            min-height: auto;
+        }
     }
 
-    .signup-left {
-        background: linear-gradient(to bottom, #050505, #1570ef);
-        padding: 40px 30px 0;
-        border-radius: 20px;
-
-        h2,
-        h3 {
+    // Left Side - Promotional Content
+    .signup-promo-section {
+        flex: 1;
+        background: linear-gradient(135deg, $primary-color 0%, $primary-dark 100%);
+        padding: 60px 40px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
             color: $white;
-            font-weight: bolder;
+
+        @media (max-width: 768px) {
+            padding: 40px 20px;
         }
 
-        .sl-logo {
+        .promo-content {
+            max-width: 500px;
+
+            // Logo Section
+            .logo-section {
+                display: flex;
+                align-items: center;
+                margin-bottom: 40px;
+                gap: 12px;
+
+                .logo-icon {
+                    width: 48px;
+                    height: 48px;
+                    background: rgba(255, 255, 255, 0.2);
+                    border-radius: 12px;
+                    display: flex;
+                    align-items: center;
+                    justify-content: center;
+                    color: $white;
+                    backdrop-filter: blur(10px);
+                }
+
+                .logo-text {
+                    display: flex;
+                    flex-direction: column;
+                    line-height: 1;
+
+                    .logo-primary {
+                        font-size: 24px;
+                        font-weight: 700;
+                        color: $white;
+                    }
+
+                    .logo-secondary {
+                        font-size: 14px;
+                        font-weight: 500;
+                        color: rgba(255, 255, 255, 0.8);
+                        text-decoration: underline;
+                    }
+                }
+            }
+
+            .promo-title {
+                font-size: 32px;
+                font-weight: 700;
+                margin-bottom: 16px;
+                line-height: 1.2;
+            }
+
+            .promo-description {
+                font-size: 16px;
+                line-height: 1.6;
+                margin-bottom: 40px;
+                opacity: 0.9;
+
+            }
+
+            // Feature Highlights
+            .feature-highlights {
+                display: flex;
+                flex-direction: column;
+                gap: 24px;
+
+                .feature-item {
+                    display: flex;
+                    align-items: flex-start;
+                    gap: 16px;
+                    padding: 20px;
+                    background: rgba(255, 255, 255, 0.1);
+                    border-radius: 12px;
+                    backdrop-filter: blur(10px);
+                    transition: transform 0.2s ease;
+
+                    &:hover {
+                        transform: translateY(-2px);
+                    }
+
+                    .feature-icon {
+                        width: 48px;
+                        height: 48px;
+                        background: rgba(255, 255, 255, 0.2);
+                        border-radius: 12px;
             display: flex;
             align-items: center;
-            margin-bottom: 30px;
+                        justify-content: center;
+                        color: $white;
+                        flex-shrink: 0;
+                    }
 
-            img {
-                margin-right: 15px;
+                    .feature-text {
+                        h4 {
+                            font-size: 18px;
+                            font-weight: 600;
+                            margin: 0 0 8px 0;
+                            color: $white;
+                        }
+
+                        p {
+                            font-size: 14px;
+                            line-height: 1.5;
+                            margin: 0;
+                            opacity: 0.9;
+                        }
+                    }
+                }
             }
         }
     }
 
-    .signup-right {
-        padding: 40px 0;
+    // Right Side - Signup Form
+    .signup-form-section {
+        flex: 1;
+        padding: 60px 40px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+
+        @media (max-width: 768px) {
+            padding: 40px 20px;
+        }
+
+        .signup-form-wrapper {
+            width: 100%;
+            max-width: 450px;
+        }
+
+        // Form Header
+        .form-header {
+            margin-bottom: 32px;
+            text-align: center;
+
+            .form-title {
+                font-size: 32px;
+                font-weight: 700;
+                color: $text-primary;
+                margin-bottom: 8px;
+            }
+
+            .form-subtitle {
+                font-size: 16px;
+                color: $text-secondary;
+                line-height: 1.5;
+            }
+        }
+
+        // Form Styles
+        .signup-form {
+            .form-row {
+                display: grid;
+                grid-template-columns: 1fr 1fr;
+                gap: 16px;
+                margin-bottom: 24px;
+
+                @media (max-width: 480px) {
+                    grid-template-columns: 1fr;
+                }
+            }
+
+
+            // Error and Success Messages
+            .error-message {
+                display: flex;
+                align-items: center;
+                gap: 8px;
+                padding: 12px 16px;
+                background: rgba(239, 68, 68, 0.1);
+                border: 1px solid rgba(239, 68, 68, 0.2);
+                border-radius: 8px;
+                color: $error-color;
+                font-size: 14px;
+                margin-bottom: 16px;
+
+                svg {
+                    flex-shrink: 0;
+                }
+            }
+
+            .success-message {
+                display: flex;
+                align-items: center;
+                gap: 8px;
+                padding: 12px 16px;
+                background: rgba(16, 185, 129, 0.1);
+                border: 1px solid rgba(16, 185, 129, 0.2);
+                border-radius: 8px;
+                color: $success-color;
+                font-size: 14px;
+                margin-bottom: 16px;
+
+                svg {
+                    flex-shrink: 0;
+                }
+            }
+
+            // Primary Button
+            .btn-primary {
+                width: 100%;
+                padding: 14px 24px;
+                background: $primary-color;
+                color: $white;
+                border: none;
+                border-radius: 8px;
+                font-size: 16px;
+                font-weight: 600;
+                cursor: pointer;
+                transition: all 0.2s ease;
+                margin-bottom: 24px;
+
+                &:hover:not(:disabled) {
+                    background: $primary-dark;
+                    transform: translateY(-1px);
+                    box-shadow: $shadow-md;
+                }
+
+                &:disabled {
+                    opacity: 0.6;
+                    cursor: not-allowed;
+                }
+
+                .loading-spinner {
+                    display: flex;
+                    align-items: center;
+                    justify-content: center;
+                    gap: 8px;
+
+                    .spinner {
+                        width: 16px;
+                        height: 16px;
+                        border: 2px solid rgba(255, 255, 255, 0.3);
+                        border-top: 2px solid $white;
+                        border-radius: 50%;
+                        animation: spin 1s linear infinite;
+                    }
+                }
+            }
+
+            // Divider
+            .divider {
+                position: relative;
+                text-align: center;
+                margin: 24px 0;
+
+                &::before {
+                    content: '';
+                    position: absolute;
+                    top: 50%;
+                    left: 0;
+                    right: 0;
+                    height: 1px;
+                    background: $border-color;
+                }
+
+                .divider-text {
+                    background: $white;
+                    padding: 0 16px;
+                    color: $text-light;
+                    font-size: 14px;
+                    font-weight: 500;
+                }
+            }
+
+            // Social Login
+            .social-login {
+                display: flex;
+                flex-direction: column;
+                gap: 12px;
+                margin-bottom: 24px;
+
+                .btn-social {
+                    display: flex;
+                    align-items: center;
+                    justify-content: center;
+                    gap: 12px;
+                    padding: 12px 24px;
+                    border: 2px solid $border-color;
+                    background: $white;
+                    color: $text-primary;
+                    border-radius: 8px;
+                    font-size: 14px;
+                    font-weight: 500;
+                    cursor: pointer;
+                    transition: all 0.2s ease;
+
+                    &:hover {
+                        border-color: $primary-color;
+                        background: $primary-light;
+                    }
+
+                    svg {
+                        width: 20px;
+                        height: 20px;
+                    }
+
+                    &.btn-google {
+                        &:hover {
+                            border-color: #4285F4;
+                            background: rgba(66, 133, 244, 0.1);
+                        }
+                    }
+
+                    &.btn-facebook {
+                        &:hover {
+                            border-color: #1877F2;
+                            background: rgba(24, 119, 242, 0.1);
+                        }
+                    }
+                }
+            }
+
+            // Login Link
+            .login-link {
+                text-align: center;
+                font-size: 14px;
+                color: $text-secondary;
+
+                a {
+                    color: $primary-color;
+                    text-decoration: none;
+                    font-weight: 600;
+                    margin-left: 4px;
+
+                    &:hover {
+                        color: $primary-dark;
+                    }
+                }
+            }
+        }
     }
-    h1 {
-        color: #fff;
+}
+
+// Animations
+@keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}
+
+// Responsive Design
+@media (max-width: 1024px) {
+    .modern-signup-page {
+        .signup-container {
+            max-width: 900px;
+        }
+    }
+}
+
+@media (max-width: 768px) {
+    .modern-signup-page {
+        padding: 10px;
+        background: $white;
+
+        .signup-container {
+            border-radius: 12px;
+            box-shadow: $shadow-lg;
+        }
+
+        .signup-promo-section {
+            padding: 30px 20px;
+        }
+
+        .signup-form-section {
+            padding: 30px 20px;
+        }
+    }
+}
+
+@media (max-width: 480px) {
+    .modern-signup-page {
+        .signup-promo-section {
+            padding: 20px 16px;
+
+            .promo-content {
+                .promo-title {
+                    font-size: 24px;
+                }
+
+                .feature-highlights {
+                    .feature-item {
+                        padding: 16px;
+
+                        .feature-icon {
+                            width: 40px;
+                            height: 40px;
+                        }
+
+                        .feature-text {
+                            h4 {
+                                font-size: 16px;
+                            }
+
+                            p {
+                                font-size: 13px;
+                            }
+                        }
+                    }
+                }
+            }
+        }
+
+        .signup-form-section {
+            padding: 20px 16px;
+
+            .form-header {
+                .form-title {
+                    font-size: 28px;
+                }
+            }
+        }
     }
 }

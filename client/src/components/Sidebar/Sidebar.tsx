@@ -3,17 +3,17 @@
 import React, { useState } from 'react';
 import { useRouter, usePathname } from 'next/navigation';
 import {
-  FaTachometerAlt,
-  FaUtensils,
-  FaShoppingCart,
-  FaUsers,
-  FaBoxes,
-  FaChartBar,
-  FaUserTie,
-  FaCog,
-  FaChevronLeft,
-  FaChevronRight,
-  FaUser
+    FaTachometerAlt,
+    FaUtensils,
+    FaShoppingCart,
+    FaUsers,
+    FaBoxes,
+    FaChartBar,
+    FaUserTie,
+    FaCog,
+    FaChevronLeft,
+    FaChevronRight,
+    FaUser,
 } from 'react-icons/fa';
 
 interface SidebarItem {
@@ -24,157 +24,84 @@ interface SidebarItem {
     badge?: number;
 }
 
-interface SidebarProps {
-    className?: string;
-    onItemClick?: (item: SidebarItem) => void;
-}
-
-const Sidebar: React.FC<SidebarProps> = ({ className = '', onItemClick }) => {
+const Sidebar: React.FC = () => {
     const router = useRouter();
     const pathname = usePathname();
     const [collapsed, setCollapsed] = useState(false);
 
-    const sidebarItems: SidebarItem[] = [
-        {
-            id: 'dashboard',
-            label: 'Dashboard',
-            icon: 'FaTachometerAlt',
-            path: '/pages/dashboard'
-        },
-        {
-            id: 'menu',
-            label: 'Menu Management',
-            icon: 'FaUtensils',
-            path: '/pages/menu'
-        },
-        {
-            id: 'orders',
-            label: 'Orders',
-            icon: 'FaShoppingCart',
-            path: '/pages/orders',
-            badge: 8
-        },
-        {
-            id: 'customers',
-            label: 'Customers',
-            icon: 'FaUsers',
-            path: '/pages/customers'
-        },
-        {
-            id: 'inventory',
-            label: 'Inventory',
-            icon: 'FaBoxes',
-            path: '/pages/inventory'
-        },
-        {
-            id: 'reports',
-            label: 'Reports',
-            icon: 'FaChartBar',
-            path: '/pages/reports'
-        },
-        {
-            id: 'staff',
-            label: 'Staff Management',
-            icon: 'FaUserTie',
-            path: '/pages/staff'
-        },
-        {
-            id: 'settings',
-            label: 'Settings',
-            icon: 'FaCog',
-            path: '/pages/settings'
-        }
+    const items: SidebarItem[] = [
+        { id: 'dashboard', label: 'Dashboard', icon: 'FaTachometerAlt', path: '/dashboard' },
+        { id: 'menu', label: 'Menu Management', icon: 'FaUtensils', path: '/menu' },
+        { id: 'orders', label: 'Orders', icon: 'FaShoppingCart', path: '/orders', badge: 8 },
+        { id: 'customers', label: 'Customers', icon: 'FaUsers', path: '/customers' },
+        { id: 'inventory', label: 'Inventory', icon: 'FaBoxes', path: '/inventory' },
+        { id: 'reports', label: 'Reports', icon: 'FaChartBar', path: '/reports' },
+        { id: 'staff', label: 'Staff Management', icon: 'FaUserTie', path: '/staff' },
+        { id: 'settings', label: 'Settings', icon: 'FaCog', path: '/settings' },
     ];
 
-    const handleItemClick = (item: SidebarItem) => {
-        if (onItemClick) {
-            onItemClick(item);
-        } else {
-            router.push(item.path);
-        }
-    };
+    const go = (path: string) => router.push(path);
+    const isActive = (path: string) => pathname === path;
 
-    const isActive = (path: string) => {
-        return pathname === path;
-    };
-
-    const renderIcon = (iconName: string) => {
-        const iconMap: { [key: string]: React.ReactElement } = {
-            'FaTachometerAlt': <FaTachometerAlt />,
-            'FaUtensils': <FaUtensils />,
-            'FaShoppingCart': <FaShoppingCart />,
-            'FaUsers': <FaUsers />,
-            'FaBoxes': <FaBoxes />,
-            'FaChartBar': <FaChartBar />,
-            'FaUserTie': <FaUserTie />,
-            'FaCog': <FaCog />
+    const renderIcon = (iconName: string, active: boolean) => {
+        const props = { size: 18, color: active ? '#0d6efd' : '#6c757d' };
+        const map: Record<string, JSX.Element> = {
+            FaTachometerAlt: <FaTachometerAlt {...props} />,
+            FaUtensils: <FaUtensils {...props} />,
+            FaShoppingCart: <FaShoppingCart {...props} />,
+            FaUsers: <FaUsers {...props} />,
+            FaBoxes: <FaBoxes {...props} />,
+            FaChartBar: <FaChartBar {...props} />,
+            FaUserTie: <FaUserTie {...props} />,
+            FaCog: <FaCog {...props} />,
         };
-        return iconMap[iconName] || <FaTachometerAlt />;
+        return map[iconName] || <FaTachometerAlt {...props} />;
     };
 
     return (
-        <div className={`sidebar ${className} ${collapsed ? 'collapsed' : ''}`}>
-            {/* Toggle Button */}
-            <div className="sidebar-toggle">
-                                <button
-                    className="btn btn-link btn-sm"
-                    onClick={() => setCollapsed(!collapsed)}
-                    title={collapsed ? 'Expand Sidebar' : 'Collapse Sidebar'}
-                >
-                    {collapsed ? <FaChevronRight /> : <FaChevronLeft />}
-                </button>
-            </div>
+        <aside className={`sidebar ${collapsed ? 'collapsed' : 'open'}`}>
+            <div className="rs-side-head">
+                <FaUtensils size={20} color="#0d6efd" />
+                {!collapsed && <span className="rs-logo">Restaurant</span>}
 
-            {/* Logo/Brand */}
-            <div className="sidebar-brand">
-                <div className="brand-content">
-                    <FaUtensils className="brand-icon" />
-                    {!collapsed && <span className="brand-text">Restaurant</span>}
+                <div className="rs-toggle">
+                    <button onClick={() => setCollapsed(!collapsed)}>{collapsed ? <FaChevronRight /> : <FaChevronLeft />}</button>
                 </div>
             </div>
 
-            {/* Navigation Items */}
-            <nav className="sidebar-nav">
-                <ul className="nav-list">
-                    {sidebarItems.map((item) => (
-                        <li key={item.id} className="nav-item">
-                            <button
-                                className={`nav-link ${isActive(item.path) ? 'active' : ''}`}
-                                onClick={() => handleItemClick(item)}
-                                title={collapsed ? item.label : ''}
-                            >
-                                                    <div className="nav-icon">
-                        {renderIcon(item.icon)}
-                    </div>
-                                {!collapsed && (
-                                    <div className="nav-content">
-                                        <span className="nav-label">{item.label}</span>
-                                        {item.badge && (
-                                            <span className="nav-badge">{item.badge}</span>
-                                        )}
-                                    </div>
-                                )}
-                            </button>
-                        </li>
-                    ))}
+            <nav>
+                <ul>
+                    {items.map((i) => {
+                        const active = isActive(i.path);
+                        return (
+                            <li key={i.id} className={active ? 'active' : ''}>
+                                <button onClick={() => go(i.path)} title={collapsed ? i.label : ''}>
+                                    <span className="icon">{renderIcon(i.icon, active)}</span>
+                                    {!collapsed && (
+                                        <>
+                                            <span className="label">{i.label}</span>
+                                            {i.badge && <span className="badge">{i.badge}</span>}
+                                        </>
+                                    )}
+                                </button>
+                            </li>
+                        );
+                    })}
                 </ul>
             </nav>
 
-            {/* User Section */}
-            <div className="sidebar-footer">
-                <div className="user-info">
-                                    <div className="user-avatar">
-                    <FaUser />
+            <div className="footer">
+                <div className="avatar">
+                    <FaUser size={16} color="#adb5bd" />
                 </div>
-                    {!collapsed && (
-                        <div className="user-details">
-                            <div className="user-name">Admin User</div>
-                            <div className="user-role">Manager</div>
-                        </div>
-                    )}
-                </div>
+                {!collapsed && (
+                    <div className="user-details">
+                        <div className="name">Admin User</div>
+                        <div className="role">Manager</div>
+                    </div>
+                )}
             </div>
-        </div>
+        </aside>
     );
 };
 

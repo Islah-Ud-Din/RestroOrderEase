@@ -35,7 +35,7 @@ h4 {
 
 p {
     font-size: $font-size-base;
-    color: $gray-600;
+    color: $white;
 }
 
 ul {
@@ -49,4 +49,8 @@ a {
     &:hover {
         text-decoration: none;
     }
+}
+
+button:focus {
+    outline: 0 !important;
 }
