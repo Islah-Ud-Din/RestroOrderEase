@@ -225,14 +225,19 @@ $white: #ffffff;
   // Layout Container
   .dashboard-layout {
     display: flex;
+    flex-direction: row;
+    width: 100%;
+    position: relative;
 
     // Sidebar
     .sidebar {
       width: 256px;
+      min-width: 256px;
       background: $white;
       border-right: 1px solid $gray-200;
       min-height: calc(100vh - 72px);
-      top: inherit;
+      position: relative;
+      z-index: 10;
 
       .sidebar-nav {
         padding: 16px;
@@ -277,7 +282,10 @@ $white: #ffffff;
     // Main Content
     .main-content {
       flex: 1;
+      min-width: 0;
       padding: 24px;
+      position: relative;
+      z-index: 5;
     }
   }
 }

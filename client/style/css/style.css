@@ -10977,13 +10977,18 @@ Pages -> Modern Signup
 }
 .admin-dashboard .dashboard-layout {
   display: flex;
+  flex-direction: row;
+  width: 100%;
+  position: relative;
 }
 .admin-dashboard .dashboard-layout .sidebar {
   width: 256px;
+  min-width: 256px;
   background: #ffffff;
   border-right: 1px solid #e5e7eb;
   min-height: calc(100vh - 72px);
-  top: inherit;
+  position: relative;
+  z-index: 10;
 }
 .admin-dashboard .dashboard-layout .sidebar .sidebar-nav {
   padding: 16px;
@@ -11021,7 +11026,10 @@ Pages -> Modern Signup
 }
 .admin-dashboard .dashboard-layout .main-content {
   flex: 1;
+  min-width: 0;
   padding: 24px;
+  position: relative;
+  z-index: 5;
 }
 
 .dashboard-content {

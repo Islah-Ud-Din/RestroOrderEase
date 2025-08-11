@@ -56,13 +56,18 @@ interface Order {
 
 const AdminDashboard: React.FC = () => {
     const router = useRouter();
-    const { authToken, user } = useUser();
+    const { logout, authToken, user } = useUser();
 
     // State
     const [loading, setLoading] = useState(true);
     const [activeTab, setActiveTab] = useState<'dashboard' | 'orders' | 'new-order' | 'stats' | 'customers' | 'settings'>('dashboard');
     const [orders, setOrders] = useState<Order[]>([]);
     const [searchQuery, setSearchQuery] = useState('');
+
+    const handleLogout = () => {
+        logout();
+        router.push('/');
+    };
 
     // Effect
     useEffect(() => {
@@ -156,6 +161,33 @@ const AdminDashboard: React.FC = () => {
 
     const handleOrderStatusUpdate = (orderId: string, newStatus: Order['status']) => {
         setOrders((prevOrders) => prevOrders.map((order) => (order.id === orderId ? { ...order, status: newStatus } : order)));
+    };
+
+    const handleDeleteOrder = (orderId: string) => {
+        setOrders((prevOrders) => prevOrders.filter((order) => order.id !== orderId));
+    };
+
+    const handleViewOrder = (order: Order) => {
+        // Handle viewing order details - could open a modal or navigate to detail page
+        console.log('Viewing order:', order);
+    };
+
+    const handleSubmitOrder = (orderData: any) => {
+        // Handle new order submission
+        const newOrder: Order = {
+            id: (orders.length + 1).toString(),
+            customerName: orderData.customerName,
+            customerEmail: orderData.customerEmail,
+            customerPhone: orderData.customerPhone,
+            items: orderData.items,
+            total: orderData.items.reduce((sum: number, item: any) => sum + item.price * item.quantity, 0),
+            status: 'pending',
+            orderDate: new Date().toISOString(),
+            deliveryAddress: orderData.deliveryAddress,
+            specialInstructions: orderData.specialInstructions,
+        };
+        setOrders((prevOrders) => [newOrder, ...prevOrders]);
+        setActiveTab('orders');
     };
 
     const sidebarItems = [
@@ -280,37 +312,31 @@ const AdminDashboard: React.FC = () => {
             </div>
 
             {/* Recent Orders */}
-            <div className="bg-white rounded-xl shadow-sm border">
-                <div className="p-6 border-b border-gray-200">
-                    <div className="flex items-center justify-between">
-                        <h2 className="text-lg font-semibold text-gray-900">Recent Orders</h2>
-                        <button onClick={() => setActiveTab('orders')} className="text-blue-600 hover:text-blue-700 text-sm font-medium">
-                            View all →
-                        </button>
-                    </div>
+            <div className="orders-section">
+                <div className="section-header">
+                    <h2>Recent Orders</h2>
+                    <button onClick={() => setActiveTab('orders')} className="view-all-btn">
+                        View all →
+                    </button>
                 </div>
-                <div className="divide-y divide-gray-200">
+                <div className="orders-list">
                     {orders.slice(0, 5).map((order) => (
-                        <div key={order.id} className="p-6 hover:bg-gray-50 transition-colors">
-                            <div className="flex items-center justify-between">
-                                <div className="flex items-center space-x-4">
-                                    <div className="w-10 h-10 bg-blue-100 rounded-full flex items-center justify-center">
-                                        <span className="text-blue-600 font-semibo  ld">#{order.id}</span>
+                        <div key={order.id} className="order-item">
+                            <div className="order-content">
+                                <div className="order-info">
+                                    <div className="order-id">
+                                        <span>#{order.id}</span>
                                     </div>
-                                    <div>
-                                        <p className="font-medium text-gray-900">{order.customerName}</p>
-                                        <p className="text-sm text-gray-600">{order.items.length} items</p>
+                                    <div className="customer-info">
+                                        <p className="customer-name">{order.customerName}</p>
+                                        <p className="order-details">{order.items.length} items</p>
                                     </div>
                                 </div>
-                                <div className="flex items-center space-x-4">
-                                    <span className="font-semibold text-gray-900">${order.total.toFixed(2)}</span>
-                                    <span
-                                        className={`px-3 py-1 rounded-full text-xs font-medium flex items-center space-x-1 ${getStatusColor(
-                                            order.status
-                                        )}`}
-                                    >
+                                <div className="order-meta">
+                                    <span className="order-total">${order.total.toFixed(2)}</span>
+                                    <span className={`order-status ${order.status}`}>
                                         {getStatusIcon(order.status)}
-                                        <span className="capitalize">{order.status}</span>
+                                        <span>{order.status}</span>
                                     </span>
                                 </div>
                             </div>
@@ -322,103 +348,20 @@ const AdminDashboard: React.FC = () => {
     );
 
     const renderOrders = () => (
-        <div className="space-y-6">
-            <div className="flex items-center justify-between">
-                <h1 className="text-2xl font-bold text-gray-900">Orders Management</h1>
-                <button
-                    onClick={() => setActiveTab('new-order')}
-                    className="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-lg flex items-center space-x-2 transition-colors"
-                >
-                    <Plus className="w-4 h-4" />
+        <div className="orders-page">
+            <div className="page-header">
+                <h1>Orders Management</h1>
+                <button onClick={() => setActiveTab('new-order')} className="new-order-btn">
+                    <Plus />
                     <span>New Order</span>
                 </button>
             </div>
-
-            <div className="bg-white rounded-xl shadow-sm border">
-                <div className="p-6">
-                    <div className="flex items-center space-x-4 mb-6">
-                        <div className="relative flex-1 max-w-md">
-                            <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 w-4 h-4" />
-                            <input
-                                type="text"
-                                placeholder="Search orders..."
-                                value={searchQuery}
-                                onChange={(e) => setSearchQuery(e.target.value)}
-                                className="w-full pl-10 pr-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
-                            />
-                        </div>
-                    </div>
-
-                    <div className="overflow-x-auto">
-                        <table className="w-full">
-                            <thead>
-                                <tr className="border-b border-gray-200">
-                                    <th className="text-left py-3 px-4 font-semibold text-gray-700">Order ID</th>
-                                    <th className="text-left py-3 px-4 font-semibold text-gray-700">Customer</th>
-                                    <th className="text-left py-3 px-4 font-semibold text-gray-700">Items</th>
-                                    <th className="text-left py-3 px-4 font-semibold text-gray-700">Total</th>
-                                    <th className="text-left py-3 px-4 font-semibold text-gray-700">Status</th>
-                                    <th className="text-left py-3 px-4 font-semibold text-gray-700">Date</th>
-                                    <th className="text-left py-3 px-4 font-semibold text-gray-700">Actions</th>
-                                </tr>
-                            </thead>
-                            <tbody className="divide-y divide-gray-200">
-                                {orders.map((order) => (
-                                    <tr key={order.id} className="hover:bg-gray-50">
-                                        <td className="py-4 px-4">
-                                            <span className="font-mono text-sm">#{order.id}</span>
-                                        </td>
-                                        <td className="py-4 px-4">
-                                            <div>
-                                                <p className="font-medium text-gray-900">{order.customerName}</p>
-                                                <p className="text-sm text-gray-600">{order.customerEmail}</p>
-                                            </div>
-                                        </td>
-                                        <td className="py-4 px-4">
-                                            <span className="text-sm text-gray-600">{order.items.length} items</span>
-                                        </td>
-                                        <td className="py-4 px-4">
-                                            <span className="font-semibold">${order.total.toFixed(2)}</span>
-                                        </td>
-                                        <td className="py-4 px-4">
-                                            <select
-                                                value={order.status}
-                                                onChange={(e) => handleOrderStatusUpdate(order.id, e.target.value as Order['status'])}
-                                                className={`px-3 py-1 rounded-full text-xs font-medium border-0 ${getStatusColor(
-                                                    order.status
-                                                )}`}
-                                            >
-                                                <option value="pending">Pending</option>
-                                                <option value="confirmed">Confirmed</option>
-                                                <option value="preparing">Preparing</option>
-                                                <option value="ready">Ready</option>
-                                                <option value="delivered">Delivered</option>
-                                                <option value="cancelled">Cancelled</option>
-                                            </select>
-                                        </td>
-                                        <td className="py-4 px-4">
-                                            <span className="text-sm text-gray-600">{new Date(order.orderDate).toLocaleDateString()}</span>
-                                        </td>
-                                        <td className="py-4 px-4">
-                                            <div className="flex items-center space-x-2">
-                                                <button className="p-2 text-blue-600 hover:bg-blue-100 rounded-lg transition-colors">
-                                                    <Eye className="w-4 h-4" />
-                                                </button>
-                                                <button className="p-2 text-green-600 hover:bg-green-100 rounded-lg transition-colors">
-                                                    <Edit className="w-4 h-4" />
-                                                </button>
-                                                <button className="p-2 text-red-600 hover:bg-red-100 rounded-lg transition-colors">
-                                                    <Trash2 className="w-4 h-4" />
-                                                </button>
-                                            </div>
-                                        </td>
-                                    </tr>
-                                ))}
-                            </tbody>
-                        </table>
-                    </div>
-                </div>
-            </div>
+            <OrderList
+                orders={orders}
+                onStatusUpdate={handleOrderStatusUpdate}
+                onDeleteOrder={handleDeleteOrder}
+                onViewOrder={handleViewOrder}
+            />
         </div>
     );
 
@@ -429,26 +372,21 @@ const AdminDashboard: React.FC = () => {
             case 'orders':
                 return renderOrders();
             case 'new-order':
-                return (
-                    <div className="bg-white rounded-xl p-8 shadow-sm border">
-                        <h2 className="text-xl font-semibold mb-4">Create New Order</h2>
-                        <p className="text-gray-600">Order creation form will be implemented here.</p>
-                    </div>
-                );
+                return <OrderForm onSubmit={handleSubmitOrder} />;
             case 'stats':
                 return <AdminStats orders={orders} />;
             case 'customers':
                 return (
-                    <div className="bg-white rounded-xl p-8 shadow-sm border">
-                        <h2 className="text-xl font-semibold mb-4">Customer Management</h2>
-                        <p className="text-gray-600">Customer list and management tools will be shown here.</p>
+                    <div className="placeholder-page">
+                        <h2>Customer Management</h2>
+                        <p>Customer list and management tools will be shown here.</p>
                     </div>
                 );
             case 'settings':
                 return (
-                    <div className="bg-white rounded-xl p-8 shadow-sm border">
-                        <h2 className="text-xl font-semibold mb-4">Settings</h2>
-                        <p className="text-gray-600">System settings and configuration options will be available here.</p>
+                    <div className="placeholder-page">
+                        <h2>Settings</h2>
+                        <p>System settings and configuration options will be available here.</p>
                     </div>
                 );
             default:
@@ -486,16 +424,16 @@ const AdminDashboard: React.FC = () => {
                             <div className="user-avatar">
                                 <span>A</span>
                             </div>
-
                             <span className="user-name"> {(user as any)?.name || 'Admin'}</span>
                         </div>
-                        <button className="logout-btn">
+                        <button className="logout-btn" onClick={handleLogout}>
                             <LogOut />
                             <span>Logout</span>
                         </button>
                     </div>
                 </div>
             </header>
+
             <div className="dashboard-layout">
                 {/* Sidebar */}
                 <aside className="sidebar">
@@ -512,6 +450,7 @@ const AdminDashboard: React.FC = () => {
                         ))}
                     </nav>
                 </aside>
+
                 {/* Main Content */}
                 <main className="main-content">{renderContent()}</main>
             </div>
