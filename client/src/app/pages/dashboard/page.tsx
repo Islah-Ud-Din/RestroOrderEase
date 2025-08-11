@@ -14,7 +14,7 @@ import MenuBannerCarousel from '@/components/banner/MenuBannerCarousel';
 
 const Dashboard: React.FC = () => {
     const router = useRouter();
-    const { authToken } = useUser();
+    const { authToken, user } = useUser();
     const { getCartItemCount } = useCart();
     const [activeTab, setActiveTab] = useState<'hot-deals' | 'menu' | 'cart'>('hot-deals');
     const [selectedCategory, setSelectedCategory] = useState<string>('All');
@@ -22,6 +22,8 @@ const Dashboard: React.FC = () => {
 
     const hotDeals = getHotDeals();
     const categories = ['All', ...getAllCategories()];
+
+    console.log('User in dashboard:', user);
 
     useEffect(() => {
         const token = localStorage.getItem('authToken');

@@ -1,8 +1,14 @@
 import type { Metadata } from "next";
+
+// Contexts
 import { UserProvider } from "@/contexts/UserContext";
 import { CartProvider } from "@/contexts/CartContext";
+
+// CSS
 import "../../style/css/style.css";
 import "../../style/css/font.css";
+
+// Components
 import AuthLayout from "@/components/layout/AuthLayout";
 
 export const metadata: Metadata = {

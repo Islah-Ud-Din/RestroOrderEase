@@ -1,19 +1,11 @@
 'use client';
 import React, { createContext, useContext, useState, ReactNode } from 'react';
-// import HeaderFunc from '@/app/components/Header/header';
-
-// Define the user type
-type User = {
-    email: string;
-    username: string;
-    password: string;
-};
 
 // Define the context type
 type UserContextType = {
-    user: User | null;
+    user: object | null;
     authToken: string | null;
-    setUser: (user: User) => void;
+    setUser: (user: object) => void;
     setAuthToken: (token: string | null) => void;
     logout: () => void;
 };
@@ -23,13 +15,13 @@ const UserContext = createContext<UserContextType | undefined>(undefined);
 
 // Provider component
 export const UserProvider: React.FC<{ children: ReactNode }> = ({ children }) => {
-    const [user, setUser] = useState<User | null>(null);
+    const [user, setUser] = useState<object | null>(null);
     const [authToken, setAuthToken] = useState<string | null>(null); // Store auth token
-
     const logout = () => {
         setUser(null);
-        setAuthToken(null); // Clear token on logout
+        setAuthToken(null);
     };
+    console.log('User in context:', user);
 
     return <UserContext.Provider value={{ user, authToken, setUser, setAuthToken, logout }}>{children}</UserContext.Provider>;
 };

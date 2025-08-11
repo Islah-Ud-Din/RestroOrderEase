@@ -10,6 +10,7 @@ import { useUser } from '@/contexts/UserContext';
 // Custom Hook
 import useApi from '@/hooks/useApi';
 
+
 interface LoginFormValues {
     email: string;
     password: string;
@@ -17,7 +18,7 @@ interface LoginFormValues {
 
 const Login: React.FC = () => {
     const router = useRouter();
-    const { setUser } = useUser();
+    const { setUser, setRole, setAuthToken } = useUser();
     const { postMethod } = useApi();
 
     const [form, setForm] = useState<LoginFormValues>({ email: '', password: '' });
@@ -58,15 +59,29 @@ const Login: React.FC = () => {
 
         setLoading(true);
         try {
-            const response: { accessToken?: string; message?: string } = await postMethod('/api/login', {
+            const response: {
+                accessToken?: string;
+                message?: string;
+                user?: object;
+            } = await postMethod('/api/login', {
                 email: form.email,
                 password: form.password,
             });
 
-            if (response?.accessToken) {
-                setUser(response.accessToken);
+            if (response?.accessToken && response?.user) {
+                setUser(response.user);
+                setAuthToken(response.accessToken);
                 localStorage.setItem('authToken', response.accessToken);
-                router.push('/pages/dashboard');
+
+                // Role to route mapping
+                const role = (response.user as any).role?.toLowerCase();
+                const roleRoutes: Record<string, string> = {
+                    admin: '/pages/admin',
+                    user: '/pages/dashboard',
+                };
+
+                // Redirect if role exists in map, else show error
+                roleRoutes[role] ? router.push(roleRoutes[role]) : setError('Invalid role. Please contact support.');
             } else {
                 setError(response?.message || 'Invalid login response.');
             }
@@ -75,6 +90,7 @@ const Login: React.FC = () => {
         } finally {
             setLoading(false);
         }
+
     };
 
     useEffect(() => {

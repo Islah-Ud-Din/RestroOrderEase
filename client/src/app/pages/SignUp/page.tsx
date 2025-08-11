@@ -12,6 +12,7 @@ const initialFormState = {
     password: '',
     confirm: '',
     country: '',
+    role: '',
 };
 
 const SignUpPage = () => {
@@ -67,6 +68,7 @@ const SignUpPage = () => {
                 firstName: form.firstName,
                 lastName: form.lastName,
                 country: form.country,
+                role: form.role,
             });
             if (data && typeof data === 'object' && 'message' in data && typeof data.message === 'string') {
                 setSuccess(data.message);
@@ -322,6 +324,22 @@ const SignUpPage = () => {
                                     <option value="France">France</option>
                                     <option value="Japan">Japan</option>
                                     <option value="Other">Other</option>
+                                    </select>
+                                </div>
+
+                                <div className="form-group">
+                                <label htmlFor="role" className="form-label">Role</label>
+                                    <select
+                                        id="role"
+                                        name="role"
+                                        value={form.role}
+                                        onChange={handleChange}
+                                    className="form-input"
+                                        required
+                                    >
+                                        <option value="">Select your role</option>
+                                        <option value="admin">Admin</option>
+                                        <option value="user">User</option>
                                     </select>
                                 </div>
 

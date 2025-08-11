@@ -16,9 +16,9 @@ const transporter = nodemailer.createTransport({
 
 // POST /api/signup - User Registration with OTP
 router.post('/signup', async (req, res) => {
-    const { firstName, lastName, email, password, country } = req.body;
-
-    if (!firstName || !lastName || !email || !password || !country) {
+    const { firstName, lastName, email, password, country, role } = req.body;
+    console.log(req.body);
+    if (!firstName || !lastName || !email || !password || !country || !role) {
         return res.status(400).json({ message: 'All fields are required!' });
     }
 
@@ -33,9 +33,9 @@ router.post('/signup', async (req, res) => {
         const otpExpiry = new Date(Date.now() + 10 * 60 * 1000); // 10 minutes
 
         await pool.query(
-            `INSERT INTO users (first_name, last_name, email, password, country, otp, otp_expiry, is_verified)
-             VALUES ($1, $2, $3, $4, $5, $6, $7, $8)`,
-            [firstName, lastName, email, hashedPassword, country, otp, otpExpiry, false]
+            `INSERT INTO users (first_name, last_name, email, password, country, role, otp, otp_expiry, is_verified)
+             VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9)`,
+            [firstName, lastName, email, hashedPassword, country, role, otp, otpExpiry, false]
         );
 
         const mailOptions = {
@@ -102,7 +102,12 @@ router.post('/login', async (req, res) => {
             path: '/api/refresh-token',
         });
 
-        res.status(200).json({success: true, accessToken });
+        res.status(200).json({
+            message: 'Login successful',
+            success: true,
+            user: { name: `${user.first_name} ${user.last_name}`.trim(), email: user.email, role: user.role },
+            accessToken,
+        });
     } catch (err) {
         console.error('Login error:', err);
         res.status(500).json({ message: 'Server error' });
@@ -136,7 +141,7 @@ router.post('/verify', async (req, res) => {
 
         await pool.query('UPDATE users SET is_verified = true, otp = NULL, otp_expiry = NULL WHERE email = $1', [email]);
 
-        res.status(200).json({success: true,  message: 'OTP verified successfully' });
+        res.status(200).json({ success: true, message: 'OTP verified successfully' });
     } catch (err) {
         console.error('OTP verification error:', err);
         res.status(500).json({ message: 'Internal server error' });

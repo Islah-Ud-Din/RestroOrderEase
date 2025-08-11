@@ -11,7 +11,7 @@ function AuthLayout({ children }: { children: React.ReactNode }) {
     const router = useRouter();
     const pathname = usePathname();
 
-    const isLoggedIn = !!user || !!authToken;
+    const isLoggedIn = !!(user && (user as any).role) || !!authToken;
     const publicRoutes = ['/pages/login', '/pages/SignUp'];
 
     useEffect(() => {
@@ -20,7 +20,7 @@ function AuthLayout({ children }: { children: React.ReactNode }) {
         }
     }, [isLoggedIn, pathname, router]);
 
-    const rsLayoutHandle = isLoggedIn;
+    const rsLayoutHandle = isLoggedIn && (user as any)?.role === 'user' ? true : false;
 
     return (
         <>
