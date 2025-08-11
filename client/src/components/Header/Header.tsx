@@ -11,6 +11,10 @@ import { useCart } from '@/contexts/CartContext';
 
 import { FaShoppingCart } from 'react-icons/fa';
 
+// icons
+import { UtensilsCrossed } from 'lucide-react';
+
+
 const Header = () => {
     // Context
     const { logout } = useUser();
@@ -68,7 +72,14 @@ const Header = () => {
     return (
         <header className={`rs-header${blur ? ' blur-bg' : ''}`} ref={headerRef}>
             <div className="rs-container">
-                <div className="rs-logo">Restaurant</div>
+                <div className="rs-logo-wrapper">
+                    <div className="logo-icon">
+                        <UtensilsCrossed />
+                    </div>
+                    <span className="brand-name">RestaurantHub</span>
+                </div>
+
+
                 <button className="rs-hamburger" onClick={toggleNav} aria-label="Toggle navigation">
                     <span></span>
                     <span></span>
@@ -122,13 +133,7 @@ const Header = () => {
                     <Link href="/pages/cart" className="rs-link rs-cart">
                         <FaShoppingCart className="me-2" />
                         Cart
-                        {cartCount > 0 && (
-                            <span
-                                className="badge"
-                            >
-                                {cartCount}
-                            </span>
-                        )}
+                        {cartCount > 0 && <span className="badge">{cartCount}</span>}
                     </Link>
                     <RippleEffect className="rs-link">
                         <Link href="/pages/contact">Contact</Link>
@@ -137,7 +142,7 @@ const Header = () => {
                         <Link href="/pages/payment">Payment</Link>
                     </RippleEffect>
 
-                    <button className="btn btn-outline-primary" onClick={handleLogout}>
+                    <button className="rs-btn  rs-btn-primary" onClick={handleLogout}>
                         Logout
                     </button>
                 </nav>

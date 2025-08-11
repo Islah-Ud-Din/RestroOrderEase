@@ -124,7 +124,7 @@ export default function ContactPage() {
 
                     <div className="hero-buttons">
                         <RippleEffect>
-                            <button className="rs-btn rs-btn-primary">
+                            <button className="rs-btn rs-btn-primary-dark">
                                 Learn more <BiArrowFromLeft />
                             </button>
                         </RippleEffect>

@@ -1,6 +1,8 @@
 'use client';
 
 import React, { useState, useEffect } from 'react';
+
+// Navigation
 import { useRouter } from 'next/navigation';
 
 // Context
@@ -12,6 +14,9 @@ import OrderList from '@/components/admin/OrderList';
 import OrderForm from '@/components/admin/OrderForm';
 import AdminStats from '@/components/admin/AdminStats';
 
+// Data
+import { sampleOrders } from '@/data/sampleOrders';
+
 // icons
 import {
     ClipboardList,
@@ -20,9 +25,6 @@ import {
     Settings,
     LogOut,
     Plus,
-    Eye,
-    Edit,
-    Trash2,
     Bell,
     Search,
     Home,
@@ -30,7 +32,6 @@ import {
     Truck,
     DollarSign,
     ArrowUp,
-    ArrowDown,
     Clock,
     CheckCircle,
     XCircle,
@@ -80,63 +81,6 @@ const AdminDashboard: React.FC = () => {
     }, [router, authToken]);
 
     useEffect(() => {
-        const sampleOrders: Order[] = [
-            {
-                id: '1',
-                customerName: 'John Doe',
-                customerEmail: 'john@example.com',
-                customerPhone: '+1234567890',
-                items: [
-                    { id: '1', name: 'Margherita Pizza', quantity: 2, price: 12.99 },
-                    { id: '2', name: 'Caesar Salad', quantity: 1, price: 8.99 },
-                ],
-                total: 34.97,
-                status: 'pending',
-                orderDate: new Date().toISOString(),
-                deliveryAddress: '123 Main St, City, State 12345',
-                specialInstructions: 'Extra cheese on pizza',
-            },
-            {
-                id: '2',
-                customerName: 'Jane Smith',
-                customerEmail: 'jane@example.com',
-                customerPhone: '+1234567891',
-                items: [
-                    { id: '3', name: 'Chicken Pasta', quantity: 1, price: 15.99 },
-                    { id: '4', name: 'Garlic Bread', quantity: 2, price: 3.99 },
-                ],
-                total: 23.97,
-                status: 'confirmed',
-                orderDate: new Date(Date.now() - 3600000).toISOString(),
-                deliveryAddress: '456 Oak Ave, City, State 12345',
-            },
-            {
-                id: '3',
-                customerName: 'Mike Johnson',
-                customerEmail: 'mike@example.com',
-                customerPhone: '+1234567892',
-                items: [
-                    { id: '5', name: 'Beef Burger', quantity: 1, price: 11.99 },
-                    { id: '6', name: 'French Fries', quantity: 1, price: 4.99 },
-                    { id: '7', name: 'Soft Drink', quantity: 1, price: 2.99 },
-                ],
-                total: 19.97,
-                status: 'ready',
-                orderDate: new Date(Date.now() - 7200000).toISOString(),
-                deliveryAddress: '789 Pine St, City, State 12345',
-            },
-            {
-                id: '4',
-                customerName: 'Sarah Wilson',
-                customerEmail: 'sarah@example.com',
-                customerPhone: '+1234567893',
-                items: [{ id: '8', name: 'Vegetarian Pizza', quantity: 1, price: 14.99 }],
-                total: 14.99,
-                status: 'delivered',
-                orderDate: new Date(Date.now() - 10800000).toISOString(),
-                deliveryAddress: '321 Elm St, City, State 12345',
-            },
-        ];
         setOrders(sampleOrders);
     }, []);
 
@@ -168,12 +112,11 @@ const AdminDashboard: React.FC = () => {
     };
 
     const handleViewOrder = (order: Order) => {
-        // Handle viewing order details - could open a modal or navigate to detail page
         console.log('Viewing order:', order);
     };
 
+    // New Order
     const handleSubmitOrder = (orderData: any) => {
-        // Handle new order submission
         const newOrder: Order = {
             id: (orders.length + 1).toString(),
             customerName: orderData.customerName,
@@ -190,6 +133,7 @@ const AdminDashboard: React.FC = () => {
         setActiveTab('orders');
     };
 
+    // Sidebar
     const sidebarItems = [
         { id: 'dashboard', label: 'Dashboard', icon: Home },
         { id: 'orders', label: 'Orders', icon: ClipboardList },
@@ -198,25 +142,6 @@ const AdminDashboard: React.FC = () => {
         { id: 'customers', label: 'Customers', icon: Users },
         { id: 'settings', label: 'Settings', icon: Settings },
     ];
-
-    const getStatusColor = (status: Order['status']) => {
-        switch (status) {
-            case 'pending':
-                return 'text-yellow-600 bg-yellow-100';
-            case 'confirmed':
-                return 'text-blue-600 bg-blue-100';
-            case 'preparing':
-                return 'text-purple-600 bg-purple-100';
-            case 'ready':
-                return 'text-green-600 bg-green-100';
-            case 'delivered':
-                return 'text-emerald-600 bg-emerald-100';
-            case 'cancelled':
-                return 'text-red-600 bg-red-100';
-            default:
-                return 'text-gray-600 bg-gray-100';
-        }
-    };
 
     // Statistics calculations
     const totalOrders = orders.length;
@@ -351,7 +276,7 @@ const AdminDashboard: React.FC = () => {
         <div className="orders-page">
             <div className="page-header">
                 <h1>Orders Management</h1>
-                <button onClick={() => setActiveTab('new-order')} className="new-order-btn">
+                <button  onClick={() => setActiveTab('new-order')} className="new-order-btn">
                     <Plus />
                     <span>New Order</span>
                 </button>

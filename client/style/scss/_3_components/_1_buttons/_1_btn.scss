@@ -49,6 +49,25 @@ Pages -> Dashboard - POS System
         }
     }
 
+    &.rs-btn-primary-dark {
+        background-color: $white;
+        color: $primary;
+
+        &:hover {
+            background-color: #6d84f9;
+            border-color: #6d84f9;
+        }
+
+        &.rs-btn-outline {
+            background: transparent;
+            color: $primary;
+
+            &:hover {
+                background-color: rgba(69, 102, 247, 0.1);
+            }
+        }
+    }
+
     &.rs-btn-secondary {
         background-color: #6c757d;
         border-color: #6c757d;

@@ -69,6 +69,7 @@ Components -> Components
     border-radius: 4px;
     transition: color 0.2s, background 0.2s, box-shadow 0.2s;
     outline: none;
+
     &:hover,
     &:focus {
         color: $primary;
@@ -151,6 +152,36 @@ Components -> Components
 
 .rs-hamburger {
     display: none;
+}
+
+// Logo Wrapper
+.rs-logo-wrapper {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+
+    .logo-icon {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+
+        width: 32px;
+        height: 32px;
+        background: $primary;
+        border-radius: 8px;
+
+        svg {
+            width: 16px;
+            height: 16px;
+            color: $white;
+        }
+    }
+
+    .brand-name {
+        font-size: 20px;
+        font-weight: 700;
+        color: $gray-900;
+    }
 }
 
 @keyframes ripple-animate {

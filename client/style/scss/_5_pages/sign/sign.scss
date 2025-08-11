@@ -29,12 +29,12 @@ Pages -> Modern Signup
     // Left Side - Promotional Content
     .signup-promo-section {
         flex: 1;
-        background: linear-gradient(135deg, $primary-color 0%, $primary-dark 100%);
+        background: linear-gradient(135deg, $primary 0%, $black 100%);
         padding: 60px 40px;
         display: flex;
         align-items: center;
         justify-content: center;
-            color: $white;
+        color: $white;
 
         @media (max-width: 768px) {
             padding: 40px 20px;
@@ -53,12 +53,12 @@ Pages -> Modern Signup
                 .logo-icon {
                     width: 48px;
                     height: 48px;
-                    background: rgba(255, 255, 255, 0.2);
+                    background: $white;
                     border-radius: 12px;
                     display: flex;
                     align-items: center;
                     justify-content: center;
-                    color: $white;
+                    color: $primary;
                     backdrop-filter: blur(10px);
                 }
 
@@ -94,7 +94,6 @@ Pages -> Modern Signup
                 line-height: 1.6;
                 margin-bottom: 40px;
                 opacity: 0.9;
-
             }
 
             // Feature Highlights
@@ -122,8 +121,8 @@ Pages -> Modern Signup
                         height: 48px;
                         background: rgba(255, 255, 255, 0.2);
                         border-radius: 12px;
-            display: flex;
-            align-items: center;
+                        display: flex;
+                        align-items: center;
                         justify-content: center;
                         color: $white;
                         flex-shrink: 0;
@@ -191,13 +190,11 @@ Pages -> Modern Signup
                 display: grid;
                 grid-template-columns: 1fr 1fr;
                 gap: 16px;
-                margin-bottom: 24px;
 
                 @media (max-width: 480px) {
                     grid-template-columns: 1fr;
                 }
             }
-
 
             // Error and Success Messages
             .error-message {
@@ -238,7 +235,7 @@ Pages -> Modern Signup
             .btn-primary {
                 width: 100%;
                 padding: 14px 24px;
-                background: $primary-color;
+                background: $primary;
                 color: $white;
                 border: none;
                 border-radius: 8px;
@@ -249,7 +246,8 @@ Pages -> Modern Signup
                 margin-bottom: 24px;
 
                 &:hover:not(:disabled) {
-                    background: $primary-dark;
+                    background: rgba($primary, 0.8);
+
                     transform: translateY(-1px);
                     box-shadow: $shadow-md;
                 }
@@ -335,14 +333,14 @@ Pages -> Modern Signup
 
                     &.btn-google {
                         &:hover {
-                            border-color: #4285F4;
+                            border-color: #4285f4;
                             background: rgba(66, 133, 244, 0.1);
                         }
                     }
 
                     &.btn-facebook {
                         &:hover {
-                            border-color: #1877F2;
+                            border-color: #1877f2;
                             background: rgba(24, 119, 242, 0.1);
                         }
                     }
@@ -372,8 +370,12 @@ Pages -> Modern Signup
 
 // Animations
 @keyframes spin {
-    0% { transform: rotate(0deg); }
-    100% { transform: rotate(360deg); }
+    0% {
+        transform: rotate(0deg);
+    }
+    100% {
+        transform: rotate(360deg);
+    }
 }
 
 // Responsive Design

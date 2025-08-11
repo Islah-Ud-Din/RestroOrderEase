@@ -10,6 +10,8 @@ import { useUser } from '@/contexts/UserContext';
 // Custom Hook
 import useApi from '@/hooks/useApi';
 
+// icons
+import { UtensilsCrossed } from 'lucide-react';
 
 interface LoginFormValues {
     email: string;
@@ -18,7 +20,7 @@ interface LoginFormValues {
 
 const Login: React.FC = () => {
     const router = useRouter();
-    const { setUser, setRole, setAuthToken } = useUser();
+    const { setUser, setAuthToken } = useUser();
     const { postMethod } = useApi();
 
     const [form, setForm] = useState<LoginFormValues>({ email: '', password: '' });
@@ -90,7 +92,6 @@ const Login: React.FC = () => {
         } finally {
             setLoading(false);
         }
-
     };
 
     useEffect(() => {
@@ -111,26 +112,10 @@ const Login: React.FC = () => {
                         {/* Logo */}
                         <div className="logo-section">
                             <div className="logo-icon">
-                                <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
-                                    <path
-                                        d="M3 9L12 2L21 9V20C21 20.5304 20.7893 21.0391 20.4142 21.4142C20.0391 21.7893 19.5304 22 19 22H5C4.46957 22 3.96086 21.7893 3.58579 21.4142C3.21071 21.0391 3 20.5304 3 20V9Z"
-                                        stroke="currentColor"
-                                        strokeWidth="2"
-                                        strokeLinecap="round"
-                                        strokeLinejoin="round"
-                                    />
-                                    <path
-                                        d="M9 22V12H15V22"
-                                        stroke="currentColor"
-                                        strokeWidth="2"
-                                        strokeLinecap="round"
-                                        strokeLinejoin="round"
-                                    />
-                                </svg>
+                                <UtensilsCrossed />
                             </div>
                             <div className="logo-text">
-                                <span className="logo-primary">Restaurant</span>
-                                <span className="logo-secondary">Pay</span>
+                                <span className="logo-primary">RestaurantHub</span>
                             </div>
                         </div>
 
@@ -320,7 +305,7 @@ const Login: React.FC = () => {
                 <div className="login-promo-section">
                     <div className="promo-content">
                         <h2 className="promo-title">
-                            Welcome back! Please sign in to your <span className="promo-highlight">Restaurant Pay</span> account
+                            Welcome back! Please sign in to your <span className="promo-highlight">RestaurantHub</span> account
                         </h2>
                         <p className="promo-description">
                             Streamline your restaurant operations with our comprehensive management system. Track orders, manage inventory,
