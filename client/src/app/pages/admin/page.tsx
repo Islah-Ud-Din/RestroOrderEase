@@ -16,6 +16,7 @@ import AdminStats from '@/components/admin/AdminStats';
 
 // Data
 import { sampleOrders } from '@/data/sampleOrders';
+import { chartConfig  } from '@/data/chart';
 
 // icons
 import {
@@ -35,8 +36,44 @@ import {
     Clock,
     CheckCircle,
     XCircle,
+    ArrowRight,
+    ArrowDown,
 } from 'lucide-react';
 
+// Lib
+import { Bar, Line, Pie } from 'react-chartjs-2';
+import {
+    Chart as ChartJS,
+    CategoryScale,
+    LinearScale,
+    BarElement,
+    LineElement,
+    PointElement,
+    Title,
+    Tooltip,
+    ArcElement,
+    Legend,
+} from 'chart.js';
+
+// Register Chart.js components
+ChartJS.register(CategoryScale, LinearScale, BarElement, LineElement, PointElement, Title, Tooltip, Legend, ArcElement);
+const stocks = [
+    { name: 'Opzelura', current: 30, max: 100 },
+    { name: 'Abilify', current: 60, max: 100 },
+    { name: 'Chlorthalidone', current: 90, max: 100 },
+    { name: 'Zofran', current: 40, max: 100 },
+    { name: 'Gabapentin', current: 10, max: 100 },
+    { name: 'Lisinopril', current: 85, max: 100 },
+    { name: 'Atorvastatin', current: 75, max: 100 },
+    { name: 'Metformin', current: 50, max: 100 },
+    { name: 'Albuterol', current: 20, max: 100 },
+    { name: 'Omeprazole', current: 95, max: 100 },
+    { name: 'Levothyroxine', current: 45, max: 100 },
+    { name: 'Amlodipine', current: 65, max: 100 },
+    { name: 'Sertraline', current: 15, max: 100 },
+    { name: 'Simvastatin', current: 80, max: 100 },
+    { name: 'Losartan', current: 55, max: 100 },
+];
 interface Order {
     id: string;
     customerName: string;
@@ -58,12 +95,15 @@ interface Order {
 const AdminDashboard: React.FC = () => {
     const router = useRouter();
     const { logout, authToken, user } = useUser();
-
     // State
+    const [showAll, setShowAll] = useState(false);
+
     const [loading, setLoading] = useState(true);
     const [activeTab, setActiveTab] = useState<'dashboard' | 'orders' | 'new-order' | 'stats' | 'customers' | 'settings'>('dashboard');
     const [orders, setOrders] = useState<Order[]>([]);
     const [searchQuery, setSearchQuery] = useState('');
+
+    const visibleStocks = showAll ? stocks : stocks.slice(0, 5);
 
     const handleLogout = () => {
         logout();
@@ -113,6 +153,38 @@ const AdminDashboard: React.FC = () => {
 
     const handleViewOrder = (order: Order) => {
         console.log('Viewing order:', order);
+    };
+
+    const getStockStatus = (percent) => {
+        if (percent > 70) return 'bg-primary';
+        if (percent >= 30) return 'bg-secondary';
+        return 'bg-danger';
+    };
+
+    const getStockLabel = (percent) => {
+        if (percent > 85)
+            return (
+                <>
+                    High <ArrowUp />
+                </>
+            );
+        if (percent >= 50)
+            return (
+                <>
+                    Medium <ArrowRight />
+                </>
+            );
+        return (
+            <>
+                Low <ArrowDown  />
+            </>
+        );
+    };
+
+    const getTextColorClass = (percent) => {
+        if (percent > 70) return 'text-primary';
+        if (percent >= 30) return 'text-secondary';
+        return 'text-danger';
     };
 
     // New Order
@@ -236,6 +308,79 @@ const AdminDashboard: React.FC = () => {
                 </div>
             </div>
 
+            {/* Stats Graph  */}
+
+            <div className="rs-graph">
+                <div className="asw-header">
+                    <h2 className="asw-text">Available Stocks</h2>
+                    <button className="btn btn-link  mt-2" onClick={() => setShowAll(!showAll)}>
+                        {showAll ? 'Show Less' : 'View All Stocks'}
+                    </button>
+
+                    {visibleStocks.map((stock, idx) => {
+                        const percent = (stock.current / stock.max) * 100;
+                        return (
+                            <div key={idx} className="asw-bars mb-3">
+                                <h5>{stock.name}</h5>
+                                <div className="progress">
+                                    <div
+                                        className={`progress-bar ${getStockStatus(percent)}`}
+                                        role="progressbar"
+                                        style={{ width: `${percent}%` }}
+                                        aria-valuenow={stock.current}
+                                        aria-valuemin="0"
+                                        aria-valuemax={stock.max}
+                                    ></div>
+                                </div>
+                                <p className={`pb-text ${getTextColorClass(percent)}`}>{getStockLabel(percent)}</p>
+                            </div>
+                        );
+                    })}
+                </div>
+
+                <div className="bpo-section">
+                    <div className="row">
+                        <div className="col-lg-6">
+                            <div className="bpo-left">
+                                <h4 className="bpo-heading">Total Import</h4>
+                                <p>Explore on-chain funds deployed by the community, or create your own.</p>
+                                <Bar data={chartConfig.pie} options={chartConfig.barOptions} />
+                            </div>
+                        </div>
+
+                        <div className="col-lg-6">
+                            <div className="bpo-right">
+                                <h4 className="bpo-heading">Total Sale</h4>
+                                <p>Explore on-chain funds deployed by the community, or create your own.</p>
+                                <Pie
+                                    data={chartConfig.line}
+                                    width={300}
+                                    height={250}
+                                    options={{
+                                        responsive: false,
+                                        maintainAspectRatio: false,
+                                        plugins: {
+                                            legend: {
+                                                position: 'right',
+                                                labels: {
+                                                    usePointStyle: true,
+                                                    padding: 20,
+                                                },
+                                            },
+                                        },
+                                    }}
+                                />
+                            </div>
+                        </div>
+                    </div>
+
+                    <div className="line-chart">
+                        <h3>Business Performance Overview</h3>
+                        <Line data={chartConfig.lineData} options={chartConfig.lineOptions} />
+                    </div>
+                </div>
+            </div>
+
             {/* Recent Orders */}
             <div className="orders-section">
                 <div className="section-header">
@@ -276,7 +421,7 @@ const AdminDashboard: React.FC = () => {
         <div className="orders-page">
             <div className="page-header">
                 <h1>Orders Management</h1>
-                <button  onClick={() => setActiveTab('new-order')} className="new-order-btn">
+                <button onClick={() => setActiveTab('new-order')} className="new-order-btn">
                     <Plus />
                     <span>New Order</span>
                 </button>
