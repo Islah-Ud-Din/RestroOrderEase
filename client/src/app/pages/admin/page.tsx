@@ -14,9 +14,11 @@ import OrderList from '@/components/admin/OrderList';
 import OrderForm from '@/components/admin/OrderForm';
 import AdminStats from '@/components/admin/AdminStats';
 
+import SpeechToSpeech from '@/components/speechReco/speechReco';
+
 // Data
 import { sampleOrders } from '@/data/sampleOrders';
-import { chartConfig  } from '@/data/chart';
+import { chartConfig } from '@/data/chart';
 
 // icons
 import {
@@ -176,7 +178,7 @@ const AdminDashboard: React.FC = () => {
             );
         return (
             <>
-                Low <ArrowDown  />
+                Low <ArrowDown />
             </>
         );
     };
@@ -229,7 +231,9 @@ const AdminDashboard: React.FC = () => {
                     <div className="welcome-text">
                         <h1>Welcome back, Admin</h1>
                         <p>Here's what's happening with your restaurant today</p>
+                        <SpeechToSpeech />
                     </div>
+
                     <div className="date-display">
                         {new Date().toLocaleDateString('en-US', {
                             weekday: 'long',

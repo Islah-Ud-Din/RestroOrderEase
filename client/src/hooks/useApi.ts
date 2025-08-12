@@ -13,7 +13,7 @@ interface UseApiOptions {
 }
 
 function useApi<T = unknown>(options?: UseApiOptions): UseApiResult<T> {
-  const baseUrl = options?.baseUrl || 'http://localhost:6060';
+  const baseUrl = options?.baseUrl || 'http://localhost:6070';
   const [data, setData] = useState<T | null>(null);
   const [error, setError] = useState<string | null>(null);
   const [loading, setLoading] = useState(false);
