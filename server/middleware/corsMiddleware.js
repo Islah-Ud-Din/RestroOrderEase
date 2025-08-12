@@ -1,9 +1,9 @@
 const cors = require('cors');
 
-const { originURL} = process.env;
+const { clientOriginURL} = process.env;
 
 const corsOptions = {
-    origin: originURL,
+    origin: clientOriginURL,
     methods: ['GET', 'POST', 'PUT', 'DELETE'],
     allowedHeaders: ['Content-Type', 'Authorization'],
     credentials: true,
