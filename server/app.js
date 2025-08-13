@@ -17,6 +17,7 @@ app.use(corsMiddleware);
 app.use(customMiddle);
 app.use(express.json());
 
+
 // Call the DB connection
 DbConnection();
 

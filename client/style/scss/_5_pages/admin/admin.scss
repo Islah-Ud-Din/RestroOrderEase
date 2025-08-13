@@ -236,7 +236,7 @@ $white: #ffffff;
             background: $white;
             border-right: 1px solid $gray-200;
             min-height: calc(100vh - 72px);
-            position: relative;
+            position: sticky;
             z-index: 10;
 
             .sidebar-nav {

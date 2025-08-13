@@ -10235,6 +10235,7 @@ Pages -> Modern Signup
   line-height: 1.2;
 }
 .modern-signup-page .signup-promo-section .promo-content .promo-description {
+  color: #fff;
   font-size: 16px;
   line-height: 1.6;
   margin-bottom: 40px;
@@ -11020,7 +11021,7 @@ Pages -> Modern Signup
   background: #ffffff;
   border-right: 1px solid #e5e7eb;
   min-height: calc(100vh - 72px);
-  position: relative;
+  position: sticky;
   z-index: 10;
 }
 .admin-dashboard .dashboard-layout .sidebar .sidebar-nav {
