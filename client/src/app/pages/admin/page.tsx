@@ -9,28 +9,20 @@ import { useRouter } from 'next/navigation';
 import { useUser } from '@/contexts/UserContext';
 
 // Components
+import { useSidebarNavigation } from '@/hooks/useSidebarNavigation';
+
+// Components
 import Loader from '@/components/Loader/Loader';
 
-
-// Data
-
 // icons
-import {
-    ClipboardList,
-    Users,
-    BarChart3,
-    Settings,
-    LogOut,
-    Bell,
-    Search,
-    Home,
-    UtensilsCrossed,
-} from 'lucide-react';
+import { ClipboardList, Users, BarChart3, Settings, LogOut, Bell, Search, Home, UtensilsCrossed } from 'lucide-react';
 
 // Lib
 
 const AdminDashboard: React.FC = () => {
     const router = useRouter();
+    const { navigate } = useSidebarNavigation();
+
     const { logout, authToken, user } = useUser();
     // State
     const [loading, setLoading] = useState(true);
@@ -52,7 +44,6 @@ const AdminDashboard: React.FC = () => {
 
     useEffect(() => {}, []);
 
-
     // Sidebar
     const sidebarItems = [
         { id: 'dashboard', label: 'Dashboard', icon: Home },
@@ -61,27 +52,6 @@ const AdminDashboard: React.FC = () => {
         { id: 'customers', label: 'Customers', icon: Users },
         { id: 'settings', label: 'Settings', icon: Settings },
     ];
-
-    const handleSidebarNavigation = (id: string) => {
-        switch (id) {
-            case 'customers':
-                router.push('/pages/admin/customer');
-                break;
-            case 'orders':
-                router.push('/pages/admin/order');
-                break;
-            case 'stats':
-                router.push('/pages/admin/Statis');
-                break;
-            case 'settings':
-                router.push('/pages/admin/settings');
-                break;
-            case 'dashboard':
-            default:
-                router.push('/pages/admin');
-                break;
-        }
-    };
 
     if (loading) {
         return <Loader size={70} />;
@@ -124,16 +94,11 @@ const AdminDashboard: React.FC = () => {
             </header>
 
             <div className="dashboard-layout">
-                {/* Sidebar */
-                }
+                {/* Sidebar */}
                 <aside className="sidebar">
                     <nav className="sidebar-nav">
                         {sidebarItems.map((item) => (
-                            <button
-                                key={item.id}
-                                onClick={() => handleSidebarNavigation(item.id)}
-                                className={'nav-item'}
-                            >
+                            <button key={item.id} onClick={() => navigate(item.id)} className={'nav-item'}>
                                 <item.icon />
                                 <span>{item.label}</span>
                             </button>

@@ -2,11 +2,21 @@
 
 import React from 'react';
 import { useRouter } from 'next/navigation';
-import { Home, ClipboardList, BarChart3, Users, Settings, Bell, Search, LogOut, UtensilsCrossed } from 'lucide-react';
+
+// UserContext
 import { useUser } from '@/contexts/UserContext';
+
+// SidebarNav Hook
+import { useSidebarNavigation } from '@/hooks/useSidebarNavigation';
+
+import { Home, ClipboardList, BarChart3, Users, Settings, Bell, Search, LogOut, UtensilsCrossed } from 'lucide-react';
+
+
 
 const CustomersPage: React.FC = () => {
 	const router = useRouter();
+    const { navigate } = useSidebarNavigation();
+
 	const { user, logout } = useUser();
 
 	const sidebarItems = [
@@ -84,7 +94,7 @@ const CustomersPage: React.FC = () => {
 						{sidebarItems.map((item) => (
 							<button
 								key={item.id}
-								onClick={() => handleSidebarNavigation(item.id)}
+                                onClick={() => navigate(item.id)}
 								className={`nav-item${item.id === 'customers' ? ' active' : ''}`}
 							>
 								<item.icon />
@@ -106,4 +116,3 @@ const CustomersPage: React.FC = () => {
 };
 
 export default CustomersPage;
-

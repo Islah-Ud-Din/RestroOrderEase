@@ -1,12 +1,20 @@
 'use client';
 
 import React from 'react';
+// Route
 import { useRouter } from 'next/navigation';
+
+// Context Hook
 import { useUser } from '@/contexts/UserContext';
+
+// SidebarNav Hook
+import { useSidebarNavigation } from '@/hooks/useSidebarNavigation';
+
 import { Home, ClipboardList, BarChart3, Users, Settings, Bell, Search, LogOut, UtensilsCrossed } from 'lucide-react';
 
 const SettingsPage: React.FC = () => {
 	const router = useRouter();
+    const { navigate } = useSidebarNavigation();
 	const { user, logout } = useUser();
 
 	const sidebarItems = [
@@ -16,27 +24,6 @@ const SettingsPage: React.FC = () => {
 		{ id: 'customers', label: 'Customers', icon: Users },
 		{ id: 'settings', label: 'Settings', icon: Settings },
 	];
-
-	const handleSidebarNavigation = (id: string) => {
-		switch (id) {
-			case 'customers':
-				router.push('/pages/admin/customer');
-				break;
-			case 'orders':
-				router.push('/pages/admin/order');
-				break;
-			case 'stats':
-				router.push('/pages/admin/Statis');
-				break;
-			case 'settings':
-				router.push('/pages/admin/settings');
-				break;
-			case 'dashboard':
-			default:
-				router.push('/pages/admin');
-				break;
-		}
-	};
 
 	const handleLogout = () => {
 		logout();
@@ -84,7 +71,7 @@ const SettingsPage: React.FC = () => {
 						{sidebarItems.map((item) => (
 							<button
 								key={item.id}
-								onClick={() => handleSidebarNavigation(item.id)}
+								onClick={() => navigate(item.id)}
 								className={`nav-item${item.id === 'settings' ? ' active' : ''}`}
 							>
 								<item.icon />

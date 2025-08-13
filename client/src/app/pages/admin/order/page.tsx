@@ -2,10 +2,23 @@
 
 import React, { useEffect, useState } from 'react';
 import { useRouter } from 'next/navigation';
+
+// Context
 import { useUser } from '@/contexts/UserContext';
+
+// SidebarNav Hook
+import { useSidebarNavigation } from '@/hooks/useSidebarNavigation';
+
+// components
 import OrderList from '@/components/admin/OrderList';
+
+// data
 import { sampleOrders } from '@/data/sampleOrders';
+
+// Icons
 import { ClipboardList, Users, BarChart3, Settings, LogOut, Bell, Search, Home, UtensilsCrossed } from 'lucide-react';
+
+
 
 type OrderItem = {
 	id: string;
@@ -29,6 +42,7 @@ type Order = {
 
 const OrdersPage: React.FC = () => {
 	const router = useRouter();
+    const { navigate } = useSidebarNavigation();
 	const { logout, user } = useUser();
 	const [orders, setOrders] = useState<Order[]>([]);
 
@@ -61,26 +75,6 @@ const OrdersPage: React.FC = () => {
 		{ id: 'settings', label: 'Settings', icon: Settings },
 	];
 
-	const handleSidebarNavigation = (id: string) => {
-		switch (id) {
-			case 'customers':
-				router.push('/pages/admin/customer');
-				break;
-			case 'orders':
-				router.push('/pages/admin/order');
-				break;
-			case 'stats':
-				router.push('/pages/admin/Statis');
-				break;
-			case 'settings':
-				router.push('/pages/admin/settings');
-				break;
-			case 'dashboard':
-			default:
-				router.push('/pages/admin');
-				break;
-		}
-	};
 
 	return (
 		<div className="admin-dashboard">
@@ -123,7 +117,7 @@ const OrdersPage: React.FC = () => {
 						{sidebarItems.map((item) => (
 							<button
 								key={item.id}
-								onClick={() => handleSidebarNavigation(item.id)}
+								onClick={() => navigate(item.id)}
 								className={`nav-item${item.id === 'orders' ? ' active' : ''}`}
 							>
 								<item.icon />
