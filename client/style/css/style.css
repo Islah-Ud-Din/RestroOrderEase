@@ -11067,6 +11067,107 @@ Pages -> Modern Signup
   z-index: 5;
 }
 
+.payment-item {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 1rem;
+  margin-bottom: 20px;
+  border: 1px solid #e5e7eb;
+  border-radius: 0.5rem;
+  background: #ffffff;
+  transition: background-color 0.25s ease, border-color 0.25s ease, box-shadow 0.25s ease, transform 0.25s ease;
+}
+.payment-item:hover {
+  cursor: pointer;
+  background: white;
+  box-shadow: 0 4px 12px rgba(69, 102, 247, 0.2);
+  transform: translateY(-2px);
+  border-color: #4566f7;
+}
+.payment-item .payment-content {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+.payment-item .payment-content .payment-icon {
+  width: 2.5rem;
+  height: 2.5rem;
+  background-color: rgba(69, 102, 247, 0.1);
+  border-radius: 100%;
+  display: flex;
+  align-items: center;
+  text-align: center;
+  justify-content: center;
+}
+.payment-item .payment-content .payment-icon svg {
+  width: 1.25rem;
+  height: 1.25rem;
+  color: #4566f7;
+}
+.payment-item .payment-content .payment-details .company-name {
+  font-weight: 500;
+  color: #0b3273;
+  margin: 0;
+  font-size: 12px;
+}
+.payment-item .payment-content .payment-details .payment-meta {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-size: 0.875rem;
+  color: #6b7280;
+  margin-top: 0.25rem;
+  font-size: 12px;
+}
+.payment-item .payment-content .payment-details .payment-meta .status.pending {
+  color: #f59e0b;
+}
+.payment-item .payment-content .payment-details .payment-meta .status.not-response {
+  color: #28a745;
+}
+.payment-item .payment-content .payment-details .payment-meta .status.clear {
+  color: #c95c67;
+}
+.payment-item .payment-content .payment-details .payment-meta .status.completed {
+  color: #10b981;
+}
+.payment-item .payment-content .payment-details .payment-meta .status.failed {
+  color: #ef4444;
+}
+.payment-item .payment-content .payment-details .payment-meta .separator {
+  color: #6b7280;
+}
+.payment-item .payment-content .payment-details .payment-meta .amount {
+  color: #6b7280;
+}
+.payment-item .payment-info {
+  text-align: right;
+  font-size: 0.875rem;
+  color: #6b7280;
+}
+.payment-item .payment-info p {
+  margin: 0;
+  font-size: 11px;
+  line-height: 1.4;
+}
+.payment-item .more-button {
+  padding: 0.5rem;
+  color: #9ca3af;
+  background: none;
+  border: none;
+  cursor: pointer;
+  border-radius: 0.25rem;
+  transition: color 0.15s ease-in-out;
+}
+.payment-item .more-button:hover {
+  color: #4b5563;
+}
+.payment-item .more-button svg {
+  width: 1rem;
+  height: 1rem;
+}
+
 .dashboard-content {
   display: flex;
   flex-direction: column;
@@ -11083,6 +11184,13 @@ Pages -> Modern Signup
   padding: 1.5rem;
   border-radius: 12px;
   border: 1px solid #e5e7eb;
+  transition: background-color 0.25s ease, border-color 0.25s ease, box-shadow 0.25s ease, transform 0.25s ease;
+}
+.dashboard-content .admin-stats-card:hover {
+  background: white;
+  box-shadow: 0 4px 12px rgba(69, 102, 247, 0.2);
+  transform: translateY(-2px);
+  border-color: #4566f7;
 }
 .dashboard-content .admin-stats-title {
   font-size: 0.875rem;

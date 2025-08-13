@@ -290,12 +290,140 @@ $white: #ffffff;
     }
 }
 
+// payment-item
+.payment-item {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 1rem;
+    margin-bottom: 20px;
+    border: 1px solid $gray-200;
+    border-radius: 0.5rem;
+    background: $white;
+    transition: background-color 0.25s ease,
+    border-color 0.25s ease,
+    box-shadow 0.25s ease,
+    transform 0.25s ease;
+
+    &:hover {
+        cursor: pointer;
+        background: lighten($primary, 48%);
+        box-shadow: 0 4px 12px rgba($primary , 0.2) ;
+        transform: translateY(-2px);
+        border-color: $primary
+    }
+
+
+    .payment-content {
+        display: flex;
+        align-items: center;
+        gap: 1rem;
+
+        .payment-icon {
+            width: 2.5rem;
+            height: 2.5rem;
+            background-color: rgba($primary, 0.1);
+            border-radius: 100%;
+            display: flex;
+            align-items: center;
+            text-align: center;
+            justify-content: center;
+
+            svg {
+                width: 1.25rem;
+                height: 1.25rem;
+                color: $primary;
+            }
+        }
+
+        .payment-details {
+            .company-name {
+                font-weight: 500;
+                color: $secondary;
+                margin: 0;
+                font-size: 12px;
+            }
+
+            .payment-meta {
+                display: flex;
+                align-items: center;
+                gap: 0.5rem;
+                font-size: 0.875rem;
+                color: #6b7280;
+                margin-top: 0.25rem;
+                font-size: 12px;
+
+                .status {
+                    // You'll need to add status-specific classes
+                    &.pending {
+                        color: #f59e0b;
+                    }
+
+                    &.not-response {
+                        color: $success;
+                    }
+
+                    &.clear {
+                        color: $danger;
+                    }
+
+                    &.completed {
+                        color: #10b981;
+                    }
+
+                    &.failed {
+                        color: #ef4444;
+                    }
+                }
+
+                .separator {
+                    color: #6b7280;
+                }
+
+                .amount {
+                    color: #6b7280;
+                }
+            }
+        }
+    }
+
+    .payment-info {
+        text-align: right;
+        font-size: 0.875rem;
+        color: #6b7280;
+
+        p {
+            margin: 0;
+            font-size: 11px;
+            line-height: 1.4;
+        }
+    }
+
+    .more-button {
+        padding: 0.5rem;
+        color: #9ca3af;
+        background: none;
+        border: none;
+        cursor: pointer;
+        border-radius: 0.25rem;
+        transition: color 0.15s ease-in-out;
+
+        &:hover {
+            color: #4b5563;
+        }
+
+        svg {
+            width: 1rem;
+            height: 1rem;
+        }
+    }
+}
+
 // Dashboard Content
 .dashboard-content {
     display: flex;
     flex-direction: column;
     gap: 24px;
-
 
     .admin-stats {
         display: grid;
@@ -309,6 +437,18 @@ $white: #ffffff;
         padding: 1.5rem;
         border-radius: 12px;
         border: 1px solid $gray-200;
+        transition: background-color 0.25s ease,
+        border-color 0.25s ease,
+        box-shadow 0.25s ease,
+        transform 0.25s ease;
+
+        &:hover {
+            background: lighten($primary, 48%);
+            box-shadow: 0 4px 12px rgba($primary , 0.2) ;
+            transform: translateY(-2px);
+            border-color: $primary
+        }
+
     }
 
     .admin-stats-title {
@@ -345,30 +485,25 @@ $white: #ffffff;
         color: #ef4444;
     }
 
-
-
     // admin-perform
-    .admin-perform{
+    .admin-perform {
         background: $white;
         padding: 30px 0 0 30px;
         border-radius: 20px;
         margin-bottom: 20px;
 
-
-        .recharts-wrapper{
-            padding: 20px
+        .recharts-wrapper {
+            padding: 20px;
         }
     }
 
-
-    .data-graph{
+    .data-graph {
         background: $white;
         padding: 20px;
         border-radius: 20px;
 
-
-        .recharts-wrapper{
-            padding: 20px
+        .recharts-wrapper {
+            padding: 20px;
         }
     }
     // Welcome Section

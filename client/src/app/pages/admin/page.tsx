@@ -15,7 +15,19 @@ import { useSidebarNavigation } from '@/hooks/useSidebarNavigation';
 import Loader from '@/components/Loader/Loader';
 
 //  Lib
-import { ClipboardList, TrendingUp, Users, BarChart3, Settings, LogOut, Bell, Search, Home, UtensilsCrossed } from 'lucide-react';
+import {
+    ClipboardList,
+    TrendingUp,
+    Users,
+    BarChart3,
+    Settings,
+    LogOut,
+    Bell,
+    Search,
+    Home,
+    UtensilsCrossed,
+    MoreVertical,
+} from 'lucide-react';
 import { Chart as ChartJS, CategoryScale, LinearScale, BarElement, Title, Tooltip, Legend, ArcElement } from 'chart.js';
 import { Bar, Doughnut } from 'react-chartjs-2';
 import {
@@ -87,6 +99,38 @@ const AdminDashboard: React.FC = () => {
         { name: 'Jul', value: 28000000 },
     ];
 
+    const getStatusColor = (status) => {
+        switch (status) {
+            case 'High':
+                return 'text-red-500';
+            case 'Medium':
+                return 'text-yellow-500';
+            case 'Clear':
+                return 'text-green-500';
+            case 'Pending':
+                return 'text-yellow-500';
+            case 'Not Responding':
+                return 'text-red-500';
+            default:
+                return 'text-gray-500';
+        }
+    };
+
+    const paymentsData = [
+        {
+            id: 'PND001265',
+            company: 'Shell Limited Company',
+            amount: 'Rs 100,000',
+            time: '10:00-11:30',
+            location: 'Lahore',
+            status: 'Pending',
+        },
+        { company: 'Care Medical Centre', amount: 'Rs 500,000', time: '10:00-11:30', location: 'Lahore', status: 'Not Responding' },
+        { company: 'Florence health care', amount: 'Rs 750,030', time: '10:00-11:30', location: 'Lahore', status: 'Clear' },
+        { company: 'EliteCare Clinic', amount: 'Rs 750,030', time: '10:00-11:30', location: 'Lahore', status: 'Not Responding' },
+        { company: 'LifeLine Physical Therapy', amount: 'Rs 750,030', time: '10:00-11:30', location: 'Lahore', status: 'Clear' },
+    ];
+
     const saleDistribution = [
         { name: 'Category A', value: 40, color: '#3B82F6' },
         { name: 'Category B', value: 30, color: '#10B981' },
@@ -94,15 +138,23 @@ const AdminDashboard: React.FC = () => {
         { name: 'Category D', value: 10, color: '#EF4444' },
     ];
 
+
+    const colors = ['#4566f7', '#0b3273'];
+
+
+
     const barChartData = {
         labels: importData.map((item) => item.name),
         datasets: [
             {
                 label: 'Total Import',
-                data: importData.map((item) => item.value),
-                backgroundColor: '#3B82F6',
-                borderColor: '#3B82F6',
-                borderWidth: 1,
+                data: importData.map(item => item.value),
+                backgroundColor: importData.map((_, index) => colors[index % colors.length]),
+                borderColor: importData.map((_, index) => colors[index % colors.length]),
+                borderWidth: 2,
+                borderRadius: 6,
+                barThickness: 20,       // fixed thin bars
+                maxBarThickness: 20,
             },
         ],
     };
@@ -129,13 +181,16 @@ const AdminDashboard: React.FC = () => {
         },
     };
 
+
+    const PieColor = ['#4566f7', '#FF0000' ,'#0b3273', ,'#ffc107'];
+
     // Doughnut chart configuration
     const doughnutChartData = {
         labels: saleDistribution.map((item) => item.name),
         datasets: [
             {
-                data: saleDistribution.map((item) => item.value),
-                backgroundColor: saleDistribution.map((item) => item.color),
+                data: saleDistribution.map(item => item.value),
+                backgroundColor: saleDistribution.map((_, index) => PieColor[index % PieColor.length]),
                 borderWidth: 0,
             },
         ],
@@ -207,11 +262,12 @@ const AdminDashboard: React.FC = () => {
                 {/* Main Content */}
                 <main className="main-content">
                     <div className="dashboard-content">
+                        <div className='dash-header'>
                         <h3>Admin Dashboard</h3>
                         <p>Select a section from the sidebar to manage Orders, Customers, Analytics, or Settings.</p>
-
+                        </div>
                         <div className="row">
-                            <div className="col-lg-8">
+                            <div className="col-lg-9">
                                 {/* Admin Cards */}
                                 <div className="admin-stats">
                                     {[
@@ -287,7 +343,7 @@ const AdminDashboard: React.FC = () => {
                                                 <XAxis dataKey="name" />
                                                 <YAxis />
                                                 <RechartsTooltip formatter={(value: number) => `${(value / 1000000).toFixed(1)}M`} />
-                                                <Line type="monotone" dataKey="current" stroke="#3B82F6" strokeWidth={2} />
+                                                <Line type="monotone" dataKey="current" stroke="#4566f7" strokeWidth={2} />
                                                 <Line
                                                     type="monotone"
                                                     dataKey="previous"
@@ -300,7 +356,42 @@ const AdminDashboard: React.FC = () => {
                                     </div>
                                 </div>
                             </div>
-                            <div className="col-lg-4"></div>
+
+                            <div className="col-lg-3">
+                                <div>
+                                    {paymentsData.map((payment, index) => (
+                                        <div key={index} className="payment-item">
+                                            <div className="payment-content">
+                                                <div className="payment-icon">
+                                                    <Users />
+                                                </div>
+                                                <div className="payment-details">
+                                                    <p className="company-name">{payment.company}</p>
+                                                    <div className="payment-meta">
+                                                        <span className={`status ${payment.status.toLowerCase()}`}>{payment.status}</span>
+                                                        <span className="separator">•</span>
+                                                        <span className="amount">{payment.amount}</span>
+                                                    </div>
+                                                </div>
+                                            </div>
+
+
+                                            <div className="payment-info">
+                                                <p className="admin-stats-title">{payment.time}</p>
+                                                <p className="admin-stats-title">{payment.location}</p>
+                                            </div>
+                                            <button
+                                                className="more-button"
+                                                onClick={() => {
+                                                    console.log('give me more');
+                                                }}
+                                            >
+                                                <MoreVertical />
+                                            </button>
+                                        </div>
+                                    ))}
+                                </div>
+                            </div>
                         </div>
 
                         <div className="row">
