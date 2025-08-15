@@ -17,6 +17,8 @@ const UserContext = createContext<UserContextType | undefined>(undefined);
 export const UserProvider: React.FC<{ children: ReactNode }> = ({ children }) => {
     const [user, setUser] = useState<object | null>(null);
     const [authToken, setAuthToken] = useState<string | null>(null); // Store auth token
+
+
     const logout = () => {
         setUser(null);
         setAuthToken(null);

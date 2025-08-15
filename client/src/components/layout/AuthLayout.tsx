@@ -14,6 +14,7 @@ function AuthLayout({ children }: { children: React.ReactNode }) {
     const isLoggedIn = !!(user && (user as any).role) || !!authToken;
     const publicRoutes = ['/pages/login', '/pages/SignUp'];
 
+
     useEffect(() => {
         if (!isLoggedIn && !publicRoutes.includes(pathname)) {
             router.push('/pages/login'); // redirect to login if not allowed
