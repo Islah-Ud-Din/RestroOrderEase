@@ -129,12 +129,12 @@ const Cart: React.FC = () => {
                                             {item.isHotDeal && item.originalPrice ? (
                                                 <div>
                                                     <span className="text-decoration-line-through text-muted d-block">
-                                                        ${item.originalPrice.toFixed(2)}
+                                                        Rs {item.originalPrice.toFixed(2)}
                                                     </span>
-                                                    <span className="text-danger fw-bold">${discountedPrice.toFixed(2)}</span>
+                                                    <span className="text-danger fw-bold"> Rs{discountedPrice.toFixed(2)}</span>
                                                 </div>
                                             ) : (
-                                                <span className="fw-bold text-primary">${item.price.toFixed(2)}</span>
+                                                <span className="fw-bold text-primary">Rs {item.price.toFixed(2)}</span>
                                             )}
                                         </div>
                                     </div>
@@ -157,7 +157,7 @@ const Cart: React.FC = () => {
                                     </div>
                                     <div className="col-md-1">
                                         <div className="item-total text-end">
-                                            <span className="fw-bold">${(discountedPrice * item.quantity).toFixed(2)}</span>
+                                            <span className="fw-bold"> Rs {(discountedPrice * item.quantity).toFixed(2)}</span>
                                         </div>
                                     </div>
                                     <div className="col-md-1">
@@ -176,16 +176,16 @@ const Cart: React.FC = () => {
                 <div className="card-body">
                     <div className="d-flex justify-content-between align-items-center mb-3">
                         <h6 className="mb-0">Subtotal:</h6>
-                        <span className="fw-bold">${getCartTotal().toFixed(2)}</span>
+                        <span className="fw-bold">Rs{getCartTotal().toFixed(2)}</span>
                     </div>
                     <div className="d-flex justify-content-between align-items-center mb-3">
                         <h6 className="mb-0">Tax (8.5%):</h6>
-                        <span className="fw-bold">${(getCartTotal() * 0.085).toFixed(2)}</span>
+                        <span className="fw-bold">Rs{(getCartTotal() * 0.085).toFixed(2)}</span>
                     </div>
                     <hr />
                     <div className="d-flex justify-content-between align-items-center mb-3">
                         <h5 className="mb-0">Total:</h5>
-                        <span className="fw-bold fs-4 text-primary">${(getCartTotal() * 1.085).toFixed(2)}</span>
+                        <span className="fw-bold fs-4 text-primary">Rs{(getCartTotal() * 1.085).toFixed(2)}</span>
                     </div>
 
                     <button
