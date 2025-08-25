@@ -14,6 +14,21 @@ import AuthLayout from '@/components/layout/AuthLayout';
 export const metadata: Metadata = {
     title: 'Food System',
     description: 'Food ordering and management system',
+    icons: {
+        icon: [
+            { url: '/Favicon/favicon-16x16.png', sizes: '16x16', type: 'image/png' },
+            { url: '/Favicon/favicon-32x32.png', sizes: '32x32', type: 'image/png' },
+            { url: '/Favicon/favicon.ico', type: 'image/x-icon' },
+        ],
+        apple: '/Favicon/apple-touch-icon.png',
+        other: [
+            {
+                rel: 'mask-icon',
+                url: '/Favicon/safari-pinned-tab.svg',
+                color: '#5bbad5',
+            },
+        ],
+    },
 };
 
 export default function RootLayout({
